@@ -1,6 +1,7 @@
 import request from '../utils/request'
-import './api-setting'
-const setting = window.WD_API_SETTING
+import {api} from './api-setting'
+
+let setting = api()
 
 export function getProductCategories(data) {
   return request({
