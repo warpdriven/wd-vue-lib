@@ -35,9 +35,11 @@ window.WD_API_SETTING={
 
 export function config(config){
     window.WD_API_SETTING = merge(window.WD_API_SETTING,config)
+    console.info(window.WD_API_SETTING)
 }
 
 export function api(){
+    console.info(window.WD_API_SETTING);
     return window.WD_API_SETTING
 }
 

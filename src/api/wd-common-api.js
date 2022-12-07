@@ -1,9 +1,8 @@
 import request from '../utils/request'
 import {api} from './api-setting'
 
-let setting = api()
-
 export function getProductCategories(data) {
+  let setting = api()
   return request({
     url: setting['GET_PRODUCT_CATEGORIES'].ajax_url,
     method: 'post',
@@ -17,6 +16,7 @@ export function getProductCategories(data) {
 }
 
 export function getProductsByCategory(data) {
+  let setting = api()
   return request({
     url: setting['GET_PRODUCTS_BY_CATEGORY'].ajax_url,
     method: 'post',
