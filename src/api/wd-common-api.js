@@ -1,5 +1,5 @@
-import request from '@/utils/request'
-import '@/api/api-setting'
+import request from '../utils/request'
+import './api-setting'
 const setting = window.WD_API_SETTING
 
 export function getProductCategories(data) {
