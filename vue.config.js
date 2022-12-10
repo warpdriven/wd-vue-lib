@@ -16,6 +16,13 @@ module.exports = defineConfig({
         pathRewrite: {
           '^/api': ''
         }
+      },
+      '/nuwa/': {
+        target: "https://data-stg.warp-driven.com",
+        changeOrigin: true,
+        pathRewrite: {
+          '^/nuwa': ''
+        }
       }
     }
   }

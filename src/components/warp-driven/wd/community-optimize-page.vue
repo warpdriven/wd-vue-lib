@@ -21,7 +21,7 @@
           :stroke-width='20'
           :width='350'
           :color='colors'
-          :percentage='80'
+          :percentage='image_vector_plan ===0?0:(image_vector_left/image_vector_plan)*100'
           :format='InitializeFormat'
         ></el-progress>
       </el-col>
@@ -29,27 +29,33 @@
     <el-row>
       <el-col :span="1">&nbsp;</el-col>
       <el-col :span="22">
-        <el-button type="primary" @click="startBulkOptimization">Start Bulk Optimization</el-button>
+        <el-button type="primary" @click="startBulkOptimization" :loading="loading" :disabled="disabled">Start Bulk Optimization</el-button>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="1">&nbsp;</el-col>
       <el-col :span="22">
-        <el-progress :text-inside="true" :stroke-width="24" :percentage="100" status="success"></el-progress>
+        <el-progress v-show="task_status==='RUNNING'" :text-inside="true" :color='colors' :stroke-width="24" :percentage="task_progress" status="success"></el-progress>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-import {getProductCategories,getProductsByCategory} from '../../../api/wd-common-api'
+import {initProductsByCategories, getVsInitStatus ,getProductCategories} from '../../../api/wd-common-api'
+// import {products} from "../../../data/products"
 
 export default {
   data() {
     return {
+      loading:true,
       convert: false,
       remove: false,
       init: true,
+      task_progress:0,
+      task_status:"RUNNING",
+      image_vector_left:0,
+      image_vector_plan:0,
       colors: [
         { color: '#f56c6c', percentage: 20 },
         { color: '#e6a23c', percentage: 40 },
@@ -69,19 +75,35 @@ export default {
       }
     }
   },
+  computed:{
+    disabled(){
+      return (this.$refs['tree']&&this.$refs['tree'].getCheckedKeys().length === 0) || this.task_status === "RUNNING" || this.image_vector_left < 1
+    }
+  },
   mounted() {
+    this.getVsInitStatus();
     this.queryCatetgoryTree()
   },
   methods: {
     InitializeFormat(percentage) {
-      return percentage + '%\n Initialize visual search'
+      return `${percentage}%-${this.image_vector_left}\\${this.image_vector_plan}\n Initialize visual search`
+    },
+    getVsInitStatus(){
+      getVsInitStatus().then(res=>{
+        this.task_progress = res.data.task_progress
+        this.image_vector_left = res.data.image_vector_left
+        this.image_vector_plan = res.data.image_vector_plan
+        this.task_status=res.data.task_status
+        if(res.data.task_status==="RUNNING"){
+          setTimeout(this.getVsInitStatus,500)
+        }else{
+          this.loading = false
+        }
+      })
     },
     queryCatetgoryTree(){
-      const me = this
-      this.loading = true
       getProductCategories({}).then(res=>{
-        this.loading = false
-        this.data = me.getTreeNodes(res)
+        this.data = this.getTreeNodes(res)
       })
     },
     getTreeNodes(nodes){
@@ -109,8 +131,16 @@ export default {
       if(checkedKeys.length === 0){
         return
       }
-      getProductsByCategory({categories:checkedKeys}).then(res=>{
-        console.info(res)
+      this.loading = true
+      this.task_progress = 0
+      initProductsByCategories({categories:checkedKeys}).then(result=>{
+          this.getVsInitStatus()
+          if(!result.status){
+            this.$message({
+              type: 'error',
+              message: result.msg||result.detail
+            });   
+          }
       })
     }
   }
