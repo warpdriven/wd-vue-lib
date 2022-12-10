@@ -1,9 +1,9 @@
 import merge from 'deepmerge'
 
 window.WD_API_SETTING={
-    INIT_PRODUCTS_BY_CATEGORIES:{
+    INIT_PRODUCTS:{
         ajax_url:'/api/wp-admin/admin-ajax.php',
-        action:"wd_init_products_by_categories",
+        action:"wd_init_products",
         method:"POST",
         contentType: "application/x-www-form-urlencoded"
     },

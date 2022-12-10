@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import {initProductsByCategories, getVsInitStatus ,getProductCategories} from '../../../api/wd-common-api'
+import {initProducts, getVsInitStatus ,getProductCategories ,getProductsByCategory} from '../../../api/wd-common-api'
 // import {products} from "../../../data/products"
 
 export default {
@@ -86,7 +86,7 @@ export default {
   },
   methods: {
     InitializeFormat(percentage) {
-      return `${percentage}%-${this.image_vector_left}\\${this.image_vector_plan}\n Initialize visual search`
+      return `${percentage}%(${this.image_vector_left}/${this.image_vector_plan})\n Initialize visual search`
     },
     getVsInitStatus(){
       getVsInitStatus().then(res=>{
@@ -133,16 +133,22 @@ export default {
       }
       this.loading = true
       this.task_progress = 0
-      initProductsByCategories({categories:checkedKeys}).then(result=>{
+      getProductsByCategory({categories:['Chairs']}).then(res=>{
+        if(res&&res.length>0){
+          initProducts({products:res}).then(result=>{
           this.getVsInitStatus()
-          if(!result.status){
-            this.$message({
-              type: 'error',
-              message: result.msg||result.detail
-            });   
-          }
+            if(!result.status){
+              this.$message({
+                type: 'error',
+                message: result.msg||result.detail
+              });   
+            }
+          })
+        }else{
+          this.loading = false
+        }
       })
-    }
+    }  
   }
 }
 </script>

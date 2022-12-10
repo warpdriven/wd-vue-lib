@@ -27,9 +27,9 @@ export function getVsInitStatus(data) {
   return getRequest('GET_VS_INIT_STATUS',data)
 }
 
-export function initProductsByCategories(data) {
-  return getRequest('INIT_PRODUCTS_BY_CATEGORIES',data)
+export function initProducts(data) {
+  return getRequest('INIT_PRODUCTS',data)
 }
 
 
-export default {initProductsByCategories, getVsInitStatus ,getProductCategories, getProductsByCategory}
+export default {initProducts, getVsInitStatus ,getProductCategories, getProductsByCategory}
