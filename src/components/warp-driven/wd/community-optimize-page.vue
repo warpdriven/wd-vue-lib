@@ -29,7 +29,7 @@
     <el-row>
       <el-col :span="1">&nbsp;</el-col>
       <el-col :span="22">
-        <el-button type="primary" @click="startBulkOptimization" :loading="false" :disabled="false">Start Bulk Optimization</el-button>
+        <el-button type="primary" @click="startBulkOptimization" :loading="loading" :disabled="disabled">Start Bulk Optimization</el-button>
       </el-col>
     </el-row>
     <el-row>
@@ -43,8 +43,6 @@
 
 <script>
 import {initProducts, getVsInitStatus ,getProductCategories ,getProductsByCategory} from '../../../api/wd-common-api'
-// import {products} from "../../../data/products"
-
 export default {
   data() {
     return {
@@ -56,6 +54,10 @@ export default {
       task_status:"RUNNING",
       image_vector_left:0,
       image_vector_plan:0,
+      webp_left:0,
+      webp_plan:0,
+      bk_rm_left:0,
+      bk_rm_plan:0,
       colors: [
         { color: '#f56c6c', percentage: 20 },
         { color: '#e6a23c', percentage: 40 },
@@ -88,16 +90,25 @@ export default {
     InitializeFormat(percentage) {
       return `${percentage}%(${this.image_vector_left}/${this.image_vector_plan})\n Initialize visual search`
     },
+    loadTaskData(taskStaus){
+        this.task_progress = taskStaus.task_progress
+        this.image_vector_left = taskStaus.image_vector_left
+        this.image_vector_plan = taskStaus.image_vector_plan
+        this.webp_left = taskStaus.webp_left
+        this.webp_plan = taskStaus.webp_plan
+        this.bk_rm_left = taskStaus.bk_rm_left
+        this.bk_rm_plan = taskStaus.bk_rm_plan
+        this.task_status=taskStaus.task_status
+    },
     getVsInitStatus(){
       getVsInitStatus().then(res=>{
-        this.task_progress = res.data.task_progress
-        this.image_vector_left = res.data.image_vector_left
-        this.image_vector_plan = res.data.image_vector_plan
-        this.task_status=res.data.task_status
-        if(res.data.task_status==="RUNNING"){
-          setTimeout(this.getVsInitStatus,500)
-        }else{
-          this.loading = false
+        if(res.status){
+          this.loadTaskData(res.data)
+          if(res.data.task_status==="RUNNING"){
+            setTimeout(this.getVsInitStatus,500)
+          }else{
+            this.loading = false
+          }
         }
       })
     },

@@ -4,7 +4,7 @@
 
 <script>
 
-import homePage from './components/warp-driven/wd/products-handle-history-page.vue'
+import homePage from './components/warp-driven/wd/community-home-page.vue'
 
 export default {
   name: 'App',
