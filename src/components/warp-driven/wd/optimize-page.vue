@@ -1,8 +1,36 @@
 <template>
   <div class='optimize-page'>
     <el-tag>optimize page</el-tag>
+    <el-divider content-position="left">Select Product Cate</el-divider>
     <el-row>
-      <el-col span='8'>
+      <el-col :span="2">&nbsp;</el-col>
+      <el-col :span="8" style="height:400px;overflow:auto;">
+        <el-tree
+          :data='data'
+          show-checkbox
+          default-expand-all
+          node-key='term_id'
+          ref='tree'
+          highlight-current
+          :props='defaultProps'
+        ></el-tree>
+      </el-col>
+      <el-col :span='14'>
+        <el-progress
+          type='circle'
+          :stroke-width='20'
+          :width='350'
+          :color='colors'
+          :percentage='image_vector_plan ===0?0:(image_vector_left/image_vector_plan)*100'
+          :format='InitializeFormat'
+        ></el-progress>
+        <br />
+        <el-checkbox v-model='init'>Initialize visual search</el-checkbox>
+      </el-col>
+    </el-row>
+    <el-divider content-position="left"></el-divider>
+    <el-row>
+      <el-col :span='12' style="height:300px;overflow:auto;">
         <el-progress
           type='circle'
           stroke-width='10'
@@ -14,7 +42,7 @@
         <br />
         <el-checkbox v-model='convert'>Convert to WebP</el-checkbox>
       </el-col>
-      <el-col span='8'>
+      <el-col :span='12'>
         <el-progress
           type='circle'
           stroke-width='10'
@@ -26,56 +54,38 @@
         <br />
         <el-checkbox v-model='remove'>Remove pictrue background</el-checkbox>
       </el-col>
-      <el-col span='8'>
-        <el-progress
-          type='circle'
-          stroke-width='10'
-          width='200'
-          :color='colors'
-          :percentage='80'
-          :format='InitializeFormat'
-        ></el-progress>
-        <br />
-        <el-checkbox v-model='init'>Initialize visual search</el-checkbox>
-      </el-col>
     </el-row>
-    <el-divider content-position="left">Select Product Cate</el-divider>
+    <el-divider content-position="left"></el-divider>
     <el-row>
-      <el-col span="2">&nbsp;</el-col>
-      <el-col span="20">
-        <el-tree
-          :data='data'
-          show-checkbox
-          default-expand-all
-          node-key='name'
-          ref='tree'
-          highlight-current
-          :props='defaultProps'
-        ></el-tree>
+      <el-col :span="1">&nbsp;</el-col>
+      <el-col :span="22">
+        <el-button type="primary" @click="startBulkOptimization" :loading="loading" :disabled="disabled">Start Bulk Optimization</el-button>
       </el-col>
     </el-row>
     <el-row>
-      <el-col span="1">&nbsp;</el-col>
-      <el-col span="22">
-        <el-button type="primary" @click="startBulkOptimization">Start Bulk Optimization</el-button>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col span="1">&nbsp;</el-col>
-      <el-col span="22">
-        <el-progress :text-inside="true" :stroke-width="24" :percentage="100" status="success"></el-progress>
+      <el-col :span="1">&nbsp;</el-col>
+      <el-col :span="22">
+        <el-progress v-show="task_status==='RUNNING'" :text-inside="true" :color='colors' :stroke-width="24" :percentage="task_progress" status="success"></el-progress>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
+import {initProducts, getVsInitStatus ,getProductCategories ,getProductsByCategory} from '../../../api/wd-common-api'
+// import {products} from "../../../data/products"
+
 export default {
   data() {
     return {
+      loading:true,
       convert: false,
       remove: false,
       init: true,
+      task_progress:0,
+      task_status:"RUNNING",
+      image_vector_left:0,
+      image_vector_plan:0,
       colors: [
         { color: '#f56c6c', percentage: 20 },
         { color: '#e6a23c', percentage: 40 },
@@ -95,26 +105,36 @@ export default {
       }
     }
   },
+  computed:{
+    disabled(){
+      return (this.$refs['tree']&&this.$refs['tree'].getCheckedKeys().length === 0) || this.task_status === "RUNNING" || this.image_vector_left < 1
+    }
+  },
   mounted() {
+    this.getVsInitStatus();
     this.queryCatetgoryTree()
   },
   methods: {
     InitializeFormat(percentage) {
-      return percentage + '%\n Initialize visual search'
+      return `${percentage}%(${this.image_vector_left}/${this.image_vector_plan})\n Initialize visual search`
     },
-    RemoveFormat(percentage) {
-      return percentage + '%\n Remove pictrue background'
-    },
-    ConvertFormat(percentage) {
-      return percentage + '%\n Convert to WebP'
+    getVsInitStatus(){
+      getVsInitStatus().then(res=>{
+        this.task_progress = res.data.task_progress
+        this.image_vector_left = res.data.image_vector_left
+        this.image_vector_plan = res.data.image_vector_plan
+        this.task_status=res.data.task_status
+        if(res.data.task_status==="RUNNING"){
+          setTimeout(this.getVsInitStatus,500)
+        }else{
+          this.loading = false
+        }
+      })
     },
     queryCatetgoryTree(){
-      const me = this
-      this.loading = true
-      window.api.post("GET_WOO_PRODUCT_CATEGORIES",{},function(res){
-        me.loading = false
-        me.data = me.getTreeNodes(res)
-      });
+      getProductCategories({}).then(res=>{
+        this.data = this.getTreeNodes(res)
+      })
     },
     getTreeNodes(nodes){
       let rootNodes = [];
@@ -141,10 +161,20 @@ export default {
       if(checkedKeys.length === 0){
         return
       }
-      window.api.post("GET_WOO_PRODUCTS_BY_CATEGORY",{categories:checkedKeys},function(res){
-        console.info(res);
-      });
-    }
+      this.loading = true
+      this.task_progress = 0
+      getProductsByCategory({category:checkedKeys.join(","),per_page:100}).then(res=>{
+          initProducts({products:res}).then(result=>{
+          this.getVsInitStatus()
+            if(!result.status){
+              this.$message({
+                type: 'error',
+                message: result.msg||result.detail
+              });   
+            }
+          })
+      })
+    }  
   }
 }
 </script>
