@@ -31,10 +31,11 @@ window.WD_API_SETTING={
         method:"POST",
         contentType: "application/x-www-form-urlencoded"
     },
-    GET_HANDLE_HISTORY:{
+    GET_PRODUCT_HANDLE_HISTORY:{
         ajax_url:"/api/wp-admin/admin-ajax.php",
         action:"wd_get_woo_product_handle_history",
-        method:"POST"
+        method:"POST",
+        contentType: "application/x-www-form-urlencoded"
     },
     GET_PRODUCT_CATEGORIES:{
         ajax_url:"/api/wp-admin/admin-ajax.php",

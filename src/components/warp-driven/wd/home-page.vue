@@ -4,21 +4,21 @@
       <el-col :sm="12" :lg="8">
         <el-result icon="warning" subTitle="Create an account">
           <template #extra>
-            <el-link href="https://www.warp-driven.com" target="_blank"><el-button type="primary" size="mini">SIGN UP,IT'S FREE!</el-button></el-link>
+            <el-link href="https://www.warp-driven.com" target="_blank"><el-button :type="'primary'" :size="'mini'">SIGN UP,IT'S FREE!</el-button></el-link>
           </template>
         </el-result>
       </el-col>
       <el-col :sm="12" :lg="8">
         <el-result icon="success" subTitle="Enter your API Key">
           <template #extra>
-            <el-link :href="settingUrl"><el-button type="primary" size="mini">I HAVE MY API KEY</el-button></el-link>
+            <el-link :href="settingUrl"><el-button :type="'primary'" :size="'mini'">I HAVE MY API KEY</el-button></el-link>
           </template>
         </el-result>
       </el-col>
       <el-col :sm="12" :lg="8">
         <el-result icon="info"   subTitle="Contact Us">
           <template #extra>
-            <el-link href="https://www.warp-driven.com" target="_blank"><el-button type="primary" size="mini">GO TO OFFICIAL WEBSITE</el-button></el-link>
+            <el-link href="https://www.warp-driven.com" target="_blank"><el-button :type="'primary'" :size="'mini'">GO TO OFFICIAL WEBSITE</el-button></el-link>
           </template>
         </el-result>
       </el-col>
@@ -33,7 +33,7 @@
 
             </template>
             <template #extra>
-              <el-button type="primary" size="mini">link</el-button>
+              <el-button :type="'primary'" :size="'mini'">link</el-button>
             </template>
           </el-result>
         </el-col>
@@ -43,7 +43,7 @@
               
             </template>
             <template #extra>
-              <el-button type="primary" size="mini">link</el-button>
+              <el-button :type="'primary'" :size="'mini'">link</el-button>
             </template>
           </el-result>
         </el-col>
@@ -53,7 +53,7 @@
               
             </template>
             <template #extra>
-              <el-button type="primary" size="mini">link</el-button>
+              <el-button :type="'primary'" :size="'mini'">link</el-button>
             </template>
           </el-result>
         </el-col>

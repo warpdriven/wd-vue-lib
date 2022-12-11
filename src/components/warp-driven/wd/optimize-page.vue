@@ -2,9 +2,8 @@
   <div class='optimize-page'>
     <el-tag>optimize page</el-tag>
     <el-divider content-position="left">Select Product Cate</el-divider>
-    <el-row>
-      <el-col :span="2">&nbsp;</el-col>
-      <el-col :span="8" style="height:400px;overflow:auto;">
+    <el-row style="height:700px;">
+      <el-col :span="8" style="height:100%;overflow:auto;">
         <el-tree
           :data='data'
           show-checkbox
@@ -15,44 +14,43 @@
           :props='defaultProps'
         ></el-tree>
       </el-col>
-      <el-col :span='14'>
+      <el-col :span='16'>
         <el-progress
           type='circle'
           :stroke-width='20'
-          :width='350'
+          :width='300'
           :color='colors'
-          :percentage='image_vector_plan ===0?0:(image_vector_left/image_vector_plan)*100'
+          :percentage='ivpercentage'
           :format='InitializeFormat'
         ></el-progress>
         <br />
         <el-checkbox v-model='init'>Initialize visual search</el-checkbox>
-      </el-col>
-    </el-row>
-    <el-divider content-position="left"></el-divider>
-    <el-row>
-      <el-col :span='12' style="height:300px;overflow:auto;">
-        <el-progress
-          type='circle'
-          stroke-width='10'
-          width='200'
-          :color='colors'
-          :percentage='25'
-          :format='ConvertFormat'
-        ></el-progress>
-        <br />
-        <el-checkbox v-model='convert'>Convert to WebP</el-checkbox>
-      </el-col>
-      <el-col :span='12'>
-        <el-progress
-          type='circle'
-          stroke-width='10'
-          width='200'
-          :color='colors'
-          :percentage='50'
-          :format='RemoveFormat'
-        ></el-progress>
-        <br />
-        <el-checkbox v-model='remove'>Remove pictrue background</el-checkbox>
+        <el-row>
+          <el-col :span='12'>
+            <el-progress
+              :type="'circle'"
+              :stroke-width='20'
+              :width="'300'"
+              :color='colors'
+              :percentage='webpercentage'
+              :format='ConvertFormat'
+            ></el-progress>
+            <br />
+            <el-checkbox v-model='convert'>Convert to WebP</el-checkbox>
+          </el-col>
+          <el-col :span='12'>
+            <el-progress
+              :type="'circle'"
+              :stroke-width='20'
+              :width="'300'"
+              :color='colors'
+              :percentage='rmpercentage'
+              :format='RemoveFormat'
+            ></el-progress>
+            <br />
+            <el-checkbox v-model='remove'>Remove pictrue background</el-checkbox>
+          </el-col>
+        </el-row>
       </el-col>
     </el-row>
     <el-divider content-position="left"></el-divider>
@@ -86,6 +84,10 @@ export default {
       task_status:"RUNNING",
       image_vector_left:0,
       image_vector_plan:0,
+      webp_left:0,
+      webp_plan:0,
+      bk_rm_left:0,
+      bk_rm_plan:0,
       colors: [
         { color: '#f56c6c', percentage: 20 },
         { color: '#e6a23c', percentage: 40 },
@@ -108,6 +110,17 @@ export default {
   computed:{
     disabled(){
       return (this.$refs['tree']&&this.$refs['tree'].getCheckedKeys().length === 0) || this.task_status === "RUNNING" || this.image_vector_left < 1
+    },
+    ivpercentage(){
+      return this.bk_rm_plan ===0?0:(this.bk_rm_left/this.bk_rm_plan)*100
+    },
+    rmpercentage(){
+      console.info(this.image_vector_left)
+      return this.image_vector_plan ===0?0:(this.image_vector_left/this.image_vector_plan)*100
+    },
+    webpercentage(){
+      console.info(this.webp_left)
+      return this.webp_plan ===0?0:(this.webp_left/this.webp_plan)*100
     }
   },
   mounted() {
@@ -118,16 +131,31 @@ export default {
     InitializeFormat(percentage) {
       return `${percentage}%(${this.image_vector_left}/${this.image_vector_plan})\n Initialize visual search`
     },
+    RemoveFormat(percentage) {
+      return `${percentage}%(${this.bk_rm_left}/${this.bk_rm_plan})\n Remove pictrue background`
+    },
+    ConvertFormat(percentage) {
+      return `${percentage}%(${this.webp_left}/${this.webp_plan})\n Convert to WebP`
+    },
+    loadTaskData(taskStaus){
+        this.task_progress = taskStaus.task_progress
+        this.image_vector_left = taskStaus.image_vector_left
+        this.image_vector_plan = taskStaus.image_vector_plan
+        this.webp_left = taskStaus.webp_left
+        this.webp_plan = taskStaus.webp_plan
+        this.bk_rm_left = taskStaus.bk_rm_left
+        this.bk_rm_plan = taskStaus.bk_rm_plan
+        this.task_status=taskStaus.task_status
+    },
     getVsInitStatus(){
       getVsInitStatus().then(res=>{
-        this.task_progress = res.data.task_progress
-        this.image_vector_left = res.data.image_vector_left
-        this.image_vector_plan = res.data.image_vector_plan
-        this.task_status=res.data.task_status
-        if(res.data.task_status==="RUNNING"){
-          setTimeout(this.getVsInitStatus,500)
-        }else{
-          this.loading = false
+        if(res.status){
+          this.loadTaskData(res.data)
+          if(res.data.task_status==="RUNNING"){
+            setTimeout(this.getVsInitStatus,500)
+          }else{
+            this.loading = false
+          }
         }
       })
     },

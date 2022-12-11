@@ -38,5 +38,8 @@ export function initProducts(data) {
   return getRequest('INIT_PRODUCTS',data)
 }
 
+export function getProductHandleHistory(data) {
+  return getRequest('GET_PRODUCT_HANDLE_HISTORY',data)
+}
 
-export default {initProducts, getVsInitStatus ,getProductCategories, getProductsByCategory}
+export default {initProducts, getVsInitStatus ,getProductCategories, getProductsByCategory,getProductHandleHistory}
