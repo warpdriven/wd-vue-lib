@@ -3,16 +3,23 @@ import {api} from './api-setting'
 
 function getRequest(API_KEY,data){
   let setting = api()
-  return request({
+  let params = {
     url: setting[API_KEY].ajax_url,
-    method: setting[API_KEY].method,
-    headers:{
+    method: setting[API_KEY].method
+  }
+  if(setting[API_KEY].method === "POST"||setting[API_KEY].method==="post"){
+    params.headers = {
       "Content-Type":setting[API_KEY].contentType
-    },
-    data:{
+    }
+    params.data = {
       action:setting[API_KEY].action,...data
     }
-  })
+  }else{
+    params.params = {
+      action:setting[API_KEY].action,...data
+    }
+  }
+  return request(params)
 }
 
 export function getProductCategories(data) {

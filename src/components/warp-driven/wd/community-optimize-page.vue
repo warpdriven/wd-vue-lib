@@ -9,7 +9,7 @@
           :data='data'
           show-checkbox
           default-expand-all
-          node-key='name'
+          node-key='term_id'
           ref='tree'
           highlight-current
           :props='defaultProps'
@@ -29,7 +29,7 @@
     <el-row>
       <el-col :span="1">&nbsp;</el-col>
       <el-col :span="22">
-        <el-button type="primary" @click="startBulkOptimization" :loading="loading" :disabled="disabled">Start Bulk Optimization</el-button>
+        <el-button type="primary" @click="startBulkOptimization" :loading="false" :disabled="false">Start Bulk Optimization</el-button>
       </el-col>
     </el-row>
     <el-row>
@@ -133,8 +133,7 @@ export default {
       }
       this.loading = true
       this.task_progress = 0
-      getProductsByCategory({categories:['Chairs']}).then(res=>{
-        if(res&&res.length>0){
+      getProductsByCategory({category:checkedKeys.join(","),per_page:100}).then(res=>{
           initProducts({products:res}).then(result=>{
           this.getVsInitStatus()
             if(!result.status){
@@ -144,9 +143,6 @@ export default {
               });   
             }
           })
-        }else{
-          this.loading = false
-        }
       })
     }  
   }

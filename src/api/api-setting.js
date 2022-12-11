@@ -43,10 +43,8 @@ window.WD_API_SETTING={
         contentType: "application/x-www-form-urlencoded"
     },
     GET_PRODUCTS_BY_CATEGORY:{
-        ajax_url:'/api/wp-admin/admin-ajax.php',
-        action:"wd_get_woo_products_by_category",
-        method:"POST",
-        contentType: "application/x-www-form-urlencoded"
+        ajax_url:'/api/wp-json/wd/v3/products',
+        method:"GET"
     }
 }
 
