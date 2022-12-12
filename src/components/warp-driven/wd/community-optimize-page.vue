@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import {initProducts, getVsInitStatus ,getProductCategories ,getProductsByCategory} from '../../../api/wd-common-api'
+import {initProducts, getVsCreditStatus ,getProductCategories ,getProductsByCategory} from '../../../api/wd-common-api'
 export default {
   data() {
     return {
@@ -83,7 +83,7 @@ export default {
     }
   },
   mounted() {
-    this.getVsInitStatus();
+    this.getVsCreditStatus();
     this.queryCatetgoryTree()
   },
   methods: {
@@ -100,12 +100,12 @@ export default {
         this.bk_rm_plan = taskStaus.bk_rm_plan
         this.task_status=taskStaus.task_status
     },
-    getVsInitStatus(){
-      getVsInitStatus().then(res=>{
+    getVsCreditStatus(){
+      getVsCreditStatus().then(res=>{
         if(res.status){
           this.loadTaskData(res.data)
           if(res.data.task_status==="RUNNING"){
-            setTimeout(this.getVsInitStatus,500)
+            setTimeout(this.getVsCreditStatus,1000)
           }else{
             this.loading = false
           }
@@ -145,8 +145,8 @@ export default {
       this.loading = true
       this.task_progress = 0
       getProductsByCategory({category:checkedKeys.join(","),per_page:100}).then(res=>{
-          initProducts({products:res}).then(result=>{
-          this.getVsInitStatus()
+          initProducts({items:res}).then(result=>{
+          this.getVsCreditStatus()
             if(!result.status){
               this.$message({
                 type: 'error',

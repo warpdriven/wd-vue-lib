@@ -11,7 +11,7 @@ module.exports = defineConfig({
     open: true,
     proxy: {
       '/api/': {
-        target: "https://stg.woolworlds.com",
+        target: "http://localhost:9999",
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''

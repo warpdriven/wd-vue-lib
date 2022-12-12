@@ -7,9 +7,9 @@ window.WD_API_SETTING={
         method:"POST",
         contentType: "application/x-www-form-urlencoded"
     },
-    GET_VS_INIT_STATUS:{
+    GET_VS_CREDIT_STATUS:{
         ajax_url:'/api/wp-admin/admin-ajax.php',
-        action:"wd_get_vs_init_status",
+        action:"wd_get_vs_credit_status",
         method:"POST",
         contentType: "application/x-www-form-urlencoded"
     },

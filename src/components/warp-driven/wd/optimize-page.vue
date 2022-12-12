@@ -124,7 +124,7 @@ export default {
     }
   },
   mounted() {
-    this.getVsInitStatus();
+    this.getVsCreditStatus();
     this.queryCatetgoryTree()
   },
   methods: {
@@ -147,12 +147,12 @@ export default {
         this.bk_rm_plan = taskStaus.bk_rm_plan
         this.task_status=taskStaus.task_status
     },
-    getVsInitStatus(){
-      getVsInitStatus().then(res=>{
+    getVsCreditStatus(){
+      getVsCreditStatus().then(res=>{
         if(res.status){
           this.loadTaskData(res.data)
           if(res.data.task_status==="RUNNING"){
-            setTimeout(this.getVsInitStatus,500)
+            setTimeout(this.getVsCreditStatus,500)
           }else{
             this.loading = false
           }
