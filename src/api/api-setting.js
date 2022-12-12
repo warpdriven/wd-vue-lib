@@ -1,41 +1,56 @@
 import merge from 'deepmerge'
 
 window.WD_API_SETTING={
+    INIT_PRODUCTS:{
+        ajax_url:'/api/wp-admin/admin-ajax.php',
+        action:"wd_init_products",
+        method:"POST",
+        contentType: "application/x-www-form-urlencoded"
+    },
+    GET_VS_INIT_STATUS:{
+        ajax_url:'/api/wp-admin/admin-ajax.php',
+        action:"wd_get_vs_init_status",
+        method:"POST",
+        contentType: "application/x-www-form-urlencoded"
+    },
     GET_PRODUCT_HTML:{
         ajax_url:"/api/wp-admin/admin-ajax.php",
         action:"wd_get_woo_product_html",
-        type:"POST"
+        method:"POST",
+        contentType: "application/x-www-form-urlencoded"
     },
     GET_PRODUCTS_HTML_BY_VS:{
         ajax_url:"/api/wp-admin/admin-ajax.php",
         action:"wd_get_woo_products_html_by_vs",
-        type:"POST"
+        method:"POST",
+        contentType: "application/x-www-form-urlencoded"
     },
     GET_PRODUCT_LIST_HTML:{
         ajax_url:"/api/wp-admin/admin-ajax.php",
         action:"wd_get_woo_product_list_html",
-        type:"POST"
+        method:"POST",
+        contentType: "application/x-www-form-urlencoded"
     },
-    GET_HANDLE_HISTORY:{
+    GET_PRODUCT_HANDLE_HISTORY:{
         ajax_url:"/api/wp-admin/admin-ajax.php",
         action:"wd_get_woo_product_handle_history",
-        type:"POST"
+        method:"POST",
+        contentType: "application/x-www-form-urlencoded"
     },
     GET_PRODUCT_CATEGORIES:{
         ajax_url:"/api/wp-admin/admin-ajax.php",
         action:"wd_get_woo_product_categories",
-        type:"POST"
+        method:"POST",
+        contentType: "application/x-www-form-urlencoded"
     },
     GET_PRODUCTS_BY_CATEGORY:{
-        ajax_url:'/api/wp-admin/admin-ajax.php',
-        action:"wd_get_woo_products_by_category",
-        type:"POST"
+        ajax_url:'/api/wp-json/wd/v3/products',
+        method:"GET"
     }
 }
 
 export function config(config){
     window.WD_API_SETTING = merge(window.WD_API_SETTING,config)
-    console.info(window.WD_API_SETTING)
 }
 
 export function api(){

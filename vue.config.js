@@ -11,10 +11,17 @@ module.exports = defineConfig({
     open: true,
     proxy: {
       '/api/': {
-        target: process.env.VUE_APP_BASE_API,
+        target: "https://stg.woolworlds.com",
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
+        }
+      },
+      '/nuwa/': {
+        target: "https://data-stg.warp-driven.com",
+        changeOrigin: true,
+        pathRewrite: {
+          '^/nuwa': ''
         }
       }
     }

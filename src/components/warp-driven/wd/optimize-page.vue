@@ -1,81 +1,93 @@
 <template>
   <div class='optimize-page'>
     <el-tag>optimize page</el-tag>
-    <el-row>
-      <el-col span='8'>
-        <el-progress
-          type='circle'
-          stroke-width='10'
-          width='200'
-          :color='colors'
-          :percentage='25'
-          :format='ConvertFormat'
-        ></el-progress>
-        <br />
-        <el-checkbox v-model='convert'>Convert to WebP</el-checkbox>
-      </el-col>
-      <el-col span='8'>
-        <el-progress
-          type='circle'
-          stroke-width='10'
-          width='200'
-          :color='colors'
-          :percentage='50'
-          :format='RemoveFormat'
-        ></el-progress>
-        <br />
-        <el-checkbox v-model='remove'>Remove pictrue background</el-checkbox>
-      </el-col>
-      <el-col span='8'>
-        <el-progress
-          type='circle'
-          stroke-width='10'
-          width='200'
-          :color='colors'
-          :percentage='80'
-          :format='InitializeFormat'
-        ></el-progress>
-        <br />
-        <el-checkbox v-model='init'>Initialize visual search</el-checkbox>
-      </el-col>
-    </el-row>
     <el-divider content-position="left">Select Product Cate</el-divider>
-    <el-row>
-      <el-col span="2">&nbsp;</el-col>
-      <el-col span="20">
+    <el-row style="height:700px;">
+      <el-col :span="8" style="height:100%;overflow:auto;">
         <el-tree
           :data='data'
           show-checkbox
           default-expand-all
-          node-key='name'
+          node-key='term_id'
           ref='tree'
           highlight-current
           :props='defaultProps'
         ></el-tree>
       </el-col>
+      <el-col :span='16'>
+        <el-progress
+          type='circle'
+          :stroke-width='20'
+          :width='300'
+          :color='colors'
+          :percentage='ivpercentage'
+          :format='InitializeFormat'
+        ></el-progress>
+        <br />
+        <el-checkbox v-model='init'>Initialize visual search</el-checkbox>
+        <el-row>
+          <el-col :span='12'>
+            <el-progress
+              :type="'circle'"
+              :stroke-width='20'
+              :width="'300'"
+              :color='colors'
+              :percentage='webpercentage'
+              :format='ConvertFormat'
+            ></el-progress>
+            <br />
+            <el-checkbox v-model='convert'>Convert to WebP</el-checkbox>
+          </el-col>
+          <el-col :span='12'>
+            <el-progress
+              :type="'circle'"
+              :stroke-width='20'
+              :width="'300'"
+              :color='colors'
+              :percentage='rmpercentage'
+              :format='RemoveFormat'
+            ></el-progress>
+            <br />
+            <el-checkbox v-model='remove'>Remove pictrue background</el-checkbox>
+          </el-col>
+        </el-row>
+      </el-col>
     </el-row>
+    <el-divider content-position="left"></el-divider>
     <el-row>
-      <el-col span="1">&nbsp;</el-col>
-      <el-col span="22">
-        <el-button type="primary" @click="startBulkOptimization">Start Bulk Optimization</el-button>
+      <el-col :span="1">&nbsp;</el-col>
+      <el-col :span="22">
+        <el-button type="primary" @click="startBulkOptimization" :loading="loading" :disabled="disabled">Start Bulk Optimization</el-button>
       </el-col>
     </el-row>
     <el-row>
-      <el-col span="1">&nbsp;</el-col>
-      <el-col span="22">
-        <el-progress :text-inside="true" :stroke-width="24" :percentage="100" status="success"></el-progress>
+      <el-col :span="1">&nbsp;</el-col>
+      <el-col :span="22">
+        <el-progress v-show="task_status==='RUNNING'" :text-inside="true" :color='colors' :stroke-width="24" :percentage="task_progress" status="success"></el-progress>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
+import {initProducts, getVsInitStatus ,getProductCategories ,getProductsByCategory} from '../../../api/wd-common-api'
+// import {products} from "../../../data/products"
+
 export default {
   data() {
     return {
+      loading:true,
       convert: false,
       remove: false,
       init: true,
+      task_progress:0,
+      task_status:"RUNNING",
+      image_vector_left:0,
+      image_vector_plan:0,
+      webp_left:0,
+      webp_plan:0,
+      bk_rm_left:0,
+      bk_rm_plan:0,
       colors: [
         { color: '#f56c6c', percentage: 20 },
         { color: '#e6a23c', percentage: 40 },
@@ -95,26 +107,62 @@ export default {
       }
     }
   },
+  computed:{
+    disabled(){
+      return (this.$refs['tree']&&this.$refs['tree'].getCheckedKeys().length === 0) || this.task_status === "RUNNING" || this.image_vector_left < 1
+    },
+    ivpercentage(){
+      return this.bk_rm_plan ===0?0:(this.bk_rm_left/this.bk_rm_plan)*100
+    },
+    rmpercentage(){
+      console.info(this.image_vector_left)
+      return this.image_vector_plan ===0?0:(this.image_vector_left/this.image_vector_plan)*100
+    },
+    webpercentage(){
+      console.info(this.webp_left)
+      return this.webp_plan ===0?0:(this.webp_left/this.webp_plan)*100
+    }
+  },
   mounted() {
+    this.getVsInitStatus();
     this.queryCatetgoryTree()
   },
   methods: {
     InitializeFormat(percentage) {
-      return percentage + '%\n Initialize visual search'
+      return `${percentage}%(${this.image_vector_left}/${this.image_vector_plan})\n Initialize visual search`
     },
     RemoveFormat(percentage) {
-      return percentage + '%\n Remove pictrue background'
+      return `${percentage}%(${this.bk_rm_left}/${this.bk_rm_plan})\n Remove pictrue background`
     },
     ConvertFormat(percentage) {
-      return percentage + '%\n Convert to WebP'
+      return `${percentage}%(${this.webp_left}/${this.webp_plan})\n Convert to WebP`
+    },
+    loadTaskData(taskStaus){
+        this.task_progress = taskStaus.task_progress
+        this.image_vector_left = taskStaus.image_vector_left
+        this.image_vector_plan = taskStaus.image_vector_plan
+        this.webp_left = taskStaus.webp_left
+        this.webp_plan = taskStaus.webp_plan
+        this.bk_rm_left = taskStaus.bk_rm_left
+        this.bk_rm_plan = taskStaus.bk_rm_plan
+        this.task_status=taskStaus.task_status
+    },
+    getVsInitStatus(){
+      getVsInitStatus().then(res=>{
+        if(res.status){
+          this.loadTaskData(res.data)
+          if(res.data.task_status==="RUNNING"){
+            setTimeout(this.getVsInitStatus,500)
+          }else{
+            this.loading = false
+          }
+        }
+      })
     },
     queryCatetgoryTree(){
-      const me = this
-      this.loading = true
-      window.api.post("GET_WOO_PRODUCT_CATEGORIES",{},function(res){
-        me.loading = false
-        me.data = me.getTreeNodes(res)
-      });
+      getProductCategories({}).then(res=>{
+        this.data = this.getTreeNodes(res)
+      })
     },
     getTreeNodes(nodes){
       let rootNodes = [];
@@ -141,10 +189,20 @@ export default {
       if(checkedKeys.length === 0){
         return
       }
-      window.api.post("GET_WOO_PRODUCTS_BY_CATEGORY",{categories:checkedKeys},function(res){
-        console.info(res);
-      });
-    }
+      this.loading = true
+      this.task_progress = 0
+      getProductsByCategory({category:checkedKeys.join(","),per_page:100}).then(res=>{
+          initProducts({products:res}).then(result=>{
+          this.getVsInitStatus()
+            if(!result.status){
+              this.$message({
+                type: 'error',
+                message: result.msg||result.detail
+              });   
+            }
+          })
+      })
+    }  
   }
 }
 </script>

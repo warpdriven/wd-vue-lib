@@ -9,7 +9,7 @@
           :data='data'
           show-checkbox
           default-expand-all
-          node-key='name'
+          node-key='term_id'
           ref='tree'
           highlight-current
           :props='defaultProps'
@@ -21,7 +21,7 @@
           :stroke-width='20'
           :width='350'
           :color='colors'
-          :percentage='80'
+          :percentage='image_vector_plan ===0?0:(image_vector_left/image_vector_plan)*100'
           :format='InitializeFormat'
         ></el-progress>
       </el-col>
@@ -29,27 +29,35 @@
     <el-row>
       <el-col :span="1">&nbsp;</el-col>
       <el-col :span="22">
-        <el-button type="primary" @click="startBulkOptimization">Start Bulk Optimization</el-button>
+        <el-button type="primary" @click="startBulkOptimization" :loading="loading" :disabled="disabled">Start Bulk Optimization</el-button>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="1">&nbsp;</el-col>
       <el-col :span="22">
-        <el-progress :text-inside="true" :stroke-width="24" :percentage="100" status="success"></el-progress>
+        <el-progress v-show="task_status==='RUNNING'" :text-inside="true" :color='colors' :stroke-width="24" :percentage="task_progress" status="success"></el-progress>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-import {getProductCategories,getProductsByCategory} from '../../../api/wd-common-api'
-
+import {initProducts, getVsInitStatus ,getProductCategories ,getProductsByCategory} from '../../../api/wd-common-api'
 export default {
   data() {
     return {
+      loading:true,
       convert: false,
       remove: false,
       init: true,
+      task_progress:0,
+      task_status:"RUNNING",
+      image_vector_left:0,
+      image_vector_plan:0,
+      webp_left:0,
+      webp_plan:0,
+      bk_rm_left:0,
+      bk_rm_plan:0,
       colors: [
         { color: '#f56c6c', percentage: 20 },
         { color: '#e6a23c', percentage: 40 },
@@ -69,19 +77,44 @@ export default {
       }
     }
   },
+  computed:{
+    disabled(){
+      return (this.$refs['tree']&&this.$refs['tree'].getCheckedKeys().length === 0) || this.task_status === "RUNNING" || this.image_vector_left < 1
+    }
+  },
   mounted() {
+    this.getVsInitStatus();
     this.queryCatetgoryTree()
   },
   methods: {
     InitializeFormat(percentage) {
-      return percentage + '%\n Initialize visual search'
+      return `${percentage}%(${this.image_vector_left}/${this.image_vector_plan})\n Initialize visual search`
+    },
+    loadTaskData(taskStaus){
+        this.task_progress = taskStaus.task_progress
+        this.image_vector_left = taskStaus.image_vector_left
+        this.image_vector_plan = taskStaus.image_vector_plan
+        this.webp_left = taskStaus.webp_left
+        this.webp_plan = taskStaus.webp_plan
+        this.bk_rm_left = taskStaus.bk_rm_left
+        this.bk_rm_plan = taskStaus.bk_rm_plan
+        this.task_status=taskStaus.task_status
+    },
+    getVsInitStatus(){
+      getVsInitStatus().then(res=>{
+        if(res.status){
+          this.loadTaskData(res.data)
+          if(res.data.task_status==="RUNNING"){
+            setTimeout(this.getVsInitStatus,500)
+          }else{
+            this.loading = false
+          }
+        }
+      })
     },
     queryCatetgoryTree(){
-      const me = this
-      this.loading = true
       getProductCategories({}).then(res=>{
-        this.loading = false
-        this.data = me.getTreeNodes(res)
+        this.data = this.getTreeNodes(res)
       })
     },
     getTreeNodes(nodes){
@@ -109,10 +142,20 @@ export default {
       if(checkedKeys.length === 0){
         return
       }
-      getProductsByCategory({categories:checkedKeys}).then(res=>{
-        console.info(res)
+      this.loading = true
+      this.task_progress = 0
+      getProductsByCategory({category:checkedKeys.join(","),per_page:100}).then(res=>{
+          initProducts({products:res}).then(result=>{
+          this.getVsInitStatus()
+            if(!result.status){
+              this.$message({
+                type: 'error',
+                message: result.msg||result.detail
+              });   
+            }
+          })
       })
-    }
+    }  
   }
 }
 </script>

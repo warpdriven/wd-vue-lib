@@ -1,8 +1,8 @@
 <template>
   <div class="history-page">
-    <el-table height="800px" v-loading="loading" :data="tableData" style="width: 100%">
+    <el-table height="800px" v-loading="loading" :data="tableData" :style="{width: '100%'}">
       <el-table-column prop="convert_datetime" label="Date" width="180"></el-table-column>
-      <el-table-column prop="product_name" label="Product" width="200">
+      <el-table-column prop="product_name" label="Product">
         <template v-slot="scope">
           <el-link :href="scope.row.product_permalink" target="_blank" :underline="false">{{scope.row.product_name}}</el-link>
         </template>
@@ -48,14 +48,14 @@
       <el-table-column label="Gain" width="200">
         <template v-slot="scope">
           <el-progress
-            type="circle"
-            style="top:5px;"
-            :percentage="scope.row.converted_image_percentage"
-            width="20"
-            stroke-width="3"
+            :type="'circle'"
+            :style="{top:'5px'}"
+            :percentage="new Number(scope.row.converted_image_percentage)"
+            :width="20"
+            :stroke-width="3"
             :show-text="false"
           ></el-progress>
-          <span style="color:#409EFF">{{scope.row.converted_image_percentage}}%</span>-
+          <span style="color:#409EFF">&nbsp;{{scope.row.converted_image_percentage}}%</span>
           <span style="color:#409EFF">({{scope.row.converted_image_size}})</span>
         </template>
       </el-table-column>
@@ -79,6 +79,8 @@
 
 <script>
 
+import {getProductHandleHistory} from '../../../api/wd-common-api'
+
 export default {
   name: "ProductsHandleHistoryPage",
   mounted() {
@@ -95,15 +97,14 @@ export default {
   },
   methods:{
     query(){
-      const me = this
       this.loading = true
-      window.api.post("GET_WOO_PRODUCT_HANDLE_HISTORY",{page_no:this.pageNo,page_size:this.pageSize},function(data){
-        me.loading = false
-          if(data.status){
-            me.tableData = data.data
-            me.total = data.total_rows
-          }
-      });
+      getProductHandleHistory({page_no:this.pageNo,page_size:this.pageSize}).then(res=>{
+        this.loading = false
+        if(res.status){
+          this.tableData = res.data
+          this.total = res.total_rows
+        }
+      })
     },
     pageChange(page){
       this.pageNo = page
