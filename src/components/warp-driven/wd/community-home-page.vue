@@ -9,7 +9,7 @@
         </el-result>
       </el-col>
       <el-col :sm="12" :lg="8">
-        <el-result :icon="authenticated&&!is_expired?'success':'warning'" :title="authenticated?(is_expired?'API Key Has Expired':'API Key Availabled'):'Enter your API Key'" :subTitle="`${plan_start_date}~${plan_end_date}`">
+        <el-result :icon="authenticated&&!is_expired?'success':'warning'" :title="authenticated?(is_expired?'API Key Has Expired':'API Key Availabled'):'Enter your API Key'" :subTitle="`${(plan_start_date?plan_start_date+'~':'')+(plan_end_date?plan_end_date:'')}`">
           <template #extra>
             <el-link :href="settingUrl"><el-button type="primary" size="mini">{{authenticated?(is_expired?'REPLACE MY API KEY':'SHOW MY API KEY'):'I HAVE MY API KEY'}}</el-button></el-link>
           </template>
