@@ -20,6 +20,10 @@ export default {
     products_class:{
       type: String,
       default:'products'
+    },
+    product_class:{
+      type: String,
+      default:'product'
     }
   },
   data(){
@@ -42,12 +46,13 @@ export default {
     },
     contrBtnClickHandler($btn,type){
       let products_class = this.products_class
-
+      let product_class = this.product_class
       $btn.click(function(){
+        alert()
           let $wrap = $(this).parent(".wd-visual-search");
           let index = $wrap.data("index")||0;
           let $ul = $wrap.find(`.${products_class}`);
-          let $lis = $ul.find(`.${products_class}`);
+          let $lis = $ul.find(`.${product_class}`);
           let liWidth = $lis.eq(index).outerWidth(true);
           if($lis.length>0){
               let liSize = $lis.size();
