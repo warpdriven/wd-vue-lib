@@ -70,8 +70,7 @@
 </template>
 
 <script>
-import {initProducts, getVsInitStatus ,getProductCategories ,getProductsByCategory} from '../../../api/wd-common-api'
-// import {products} from "../../../data/products"
+import {initProducts, getVsCreditStatus ,getProductCategories ,getProductsByCategory} from '../../../api/wd-common-api'
 
 export default {
   data() {
@@ -112,14 +111,13 @@ export default {
       return (this.$refs['tree']&&this.$refs['tree'].getCheckedKeys().length === 0) || this.task_status === "RUNNING" || this.image_vector_left < 1
     },
     ivpercentage(){
-      return this.bk_rm_plan ===0?0:(this.bk_rm_left/this.bk_rm_plan)*100
+      return this.image_vector_plan ===0?0:(this.image_vector_left/this.image_vector_plan)*100;
     },
     rmpercentage(){
       console.info(this.image_vector_left)
-      return this.image_vector_plan ===0?0:(this.image_vector_left/this.image_vector_plan)*100
+      return this.bk_rm_plan ===0?0:(this.bk_rm_left/this.bk_rm_plan)*100;
     },
     webpercentage(){
-      console.info(this.webp_left)
       return this.webp_plan ===0?0:(this.webp_left/this.webp_plan)*100
     }
   },
@@ -148,12 +146,15 @@ export default {
         this.task_status=taskStaus.task_status
     },
     getVsCreditStatus(){
+      this.loading = true
       getVsCreditStatus().then(res=>{
+        this.$emit("task-status",res)
         if(res.status){
           this.loadTaskData(res.data)
           if(res.data.task_status==="RUNNING"){
-            setTimeout(this.getVsCreditStatus,500)
+            setTimeout(this.getVsCreditStatus,1000)
           }else{
+            this.task_progress = 0
             this.loading = false
           }
         }
@@ -190,15 +191,12 @@ export default {
         return
       }
       this.loading = true
-      this.task_progress = 0
       getProductsByCategory({category:checkedKeys.join(","),per_page:100}).then(res=>{
           initProducts({products:res}).then(result=>{
-          this.getVsInitStatus()
-            if(!result.status){
-              this.$message({
-                type: 'error',
-                message: result.msg||result.detail
-              });   
+            if(result.status){
+              this.getVsCreditStatus()
+            }else{
+              this.loading = false
             }
           })
       })

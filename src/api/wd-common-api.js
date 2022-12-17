@@ -28,7 +28,7 @@ export function getProductCategories(data) {
 }
 
 export function getProductsByCategory(data) {
-  return getRequest('GET_PRODUCTS_BY_CATEGORY',data)
+  return getRequest('GET_PRODUCTS_BY_CATEGORY', {on_sale:true,purchasable:true,status:'publish',...data})
 }
 
 export function getVsCreditStatus(data) {
