@@ -152,7 +152,7 @@ export default {
             if(result.status){
               this.getVsCreditStatus()
             }else{
-              this.loading = true
+              this.loading = false
             }
           })
       })
