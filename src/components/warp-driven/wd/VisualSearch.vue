@@ -48,7 +48,6 @@ export default {
       let products_class = this.products_class
       let product_class = this.product_class
       $btn.click(function(){
-        alert()
           let $wrap = $(this).parent(".wd-visual-search");
           let index = $wrap.data("index")||0;
           let $ul = $wrap.find(`.${products_class}`);
