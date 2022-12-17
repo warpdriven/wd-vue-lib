@@ -23,6 +23,11 @@ function getRequest(API_KEY,data){
   return request(params)
 }
 
+
+export function getProductsHtmlByVs(data) {
+  return getRequest('GET_PRODUCTS_HTML_BY_VS',data)
+}
+
 export function getProductCategories(data) {
   return getRequest('GET_PRODUCT_CATEGORIES',data)
 }
@@ -43,4 +48,4 @@ export function getProductHandleHistory(data) {
   return getRequest('GET_PRODUCT_HANDLE_HISTORY',data)
 }
 
-export default {initProducts, getVsCreditStatus ,getProductCategories, getProductsByCategory,getProductHandleHistory}
+export default {initProducts, getVsCreditStatus ,getProductCategories, getProductsByCategory,getProductHandleHistory,getProductsHtmlByVs}

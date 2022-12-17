@@ -1,15 +1,17 @@
 <template>
-  <home-page></home-page>
+  <visual-search></visual-search>
 </template>
 
 <script>
 
-import homePage from './components/warp-driven/wd/home-page.vue'
+//import homePage from './components/warp-driven/wd/home-page.vue'
+//import communityHomePage from './components/warp-driven/wd/community-home-page.vue'
+import visualSearch from './components/warp-driven/wd/VisualSearch.vue'
 
 export default {
   name: 'App',
   components: {
-    homePage
+    visualSearch
   }
 }
 </script>

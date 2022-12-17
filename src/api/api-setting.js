@@ -54,7 +54,6 @@ export function config(config){
 }
 
 export function api(){
-    console.info(window.WD_API_SETTING);
     return window.WD_API_SETTING
 }
 
