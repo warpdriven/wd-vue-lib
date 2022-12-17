@@ -50,11 +50,11 @@ export default {
       $btn.click(function(){
           let $wrap = $(this).parent(".wd-visual-search");
           let index = $wrap.data("index")||0;
-          let $ul = $wrap.find(`.${products_class}`);
-          let $lis = $ul.find(`.${product_class}`);
+          let $ul = $wrap.find("."+products_class);
+          let $lis = $ul.find("."+product_class);
           let liWidth = $lis.eq(index).outerWidth(true);
           if($lis.length>0){
-              let liSize = $lis.size();
+              let liSize = $lis.length;
               let ulWidth = liWidth * liSize;
               let left = Number.parseInt($ul.css("left"));
               let wrapWidth = $wrap.width();
