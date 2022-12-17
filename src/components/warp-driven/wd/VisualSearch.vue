@@ -41,11 +41,13 @@ export default {
       })
     },
     contrBtnClickHandler($btn,type){
+      let products_class = this.products_class
+
       $btn.click(function(){
           let $wrap = $(this).parent(".wd-visual-search");
           let index = $wrap.data("index")||0;
-          let $ul = $wrap.find(`.${this.products_class}`);
-          let $lis = $ul.find(`.${this.products_class}`);
+          let $ul = $wrap.find(`.${products_class}`);
+          let $lis = $ul.find(`.${products_class}`);
           let liWidth = $lis.eq(index).outerWidth(true);
           if($lis.length>0){
               let liSize = $lis.size();

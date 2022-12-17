@@ -1,5 +1,5 @@
 <template>
-  <visual-search></visual-search>
+  <visual-search :product_id="2276"></visual-search>
 </template>
 
 <script>
