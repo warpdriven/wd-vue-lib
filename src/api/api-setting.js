@@ -13,6 +13,22 @@ window.WD_API_SETTING={
         method:"POST",
         contentType: "application/x-www-form-urlencoded"
     },
+    GET_PRODUCT_HANDLE_HISTORY:{
+        ajax_url:"/api/wp-admin/admin-ajax.php",
+        action:"wd_get_woo_product_handle_history",
+        method:"POST",
+        contentType: "application/x-www-form-urlencoded"
+    },
+    GET_PRODUCT_CATEGORIES:{
+        ajax_url:"/api/wp-admin/admin-ajax.php",
+        action:"wd_get_woo_product_categories",
+        method:"POST",
+        contentType: "application/x-www-form-urlencoded"
+    },
+    GET_PRODUCTS_BY_CATEGORY:{
+        ajax_url:'/api/wp-json/wd/v3/products',
+        method:"GET"
+    },
     GET_PRODUCT_HTML:{
         ajax_url:"/api/wp-admin/admin-ajax.php",
         action:"wd_get_woo_product_html",
@@ -30,22 +46,6 @@ window.WD_API_SETTING={
         action:"wd_get_woo_product_list_html",
         method:"POST",
         contentType: "application/x-www-form-urlencoded"
-    },
-    GET_PRODUCT_HANDLE_HISTORY:{
-        ajax_url:"/api/wp-admin/admin-ajax.php",
-        action:"wd_get_woo_product_handle_history",
-        method:"POST",
-        contentType: "application/x-www-form-urlencoded"
-    },
-    GET_PRODUCT_CATEGORIES:{
-        ajax_url:"/api/wp-admin/admin-ajax.php",
-        action:"wd_get_woo_product_categories",
-        method:"POST",
-        contentType: "application/x-www-form-urlencoded"
-    },
-    GET_PRODUCTS_BY_CATEGORY:{
-        ajax_url:'/api/wp-json/wd/v3/products',
-        method:"GET"
     }
 }
 

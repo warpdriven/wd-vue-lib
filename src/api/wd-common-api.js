@@ -23,9 +23,12 @@ function getRequest(API_KEY,data){
   return request(params)
 }
 
+export function getVsCreditStatus(data) {
+  return getRequest('GET_VS_CREDIT_STATUS',data)
+}
 
-export function getProductsHtmlByVs(data) {
-  return getRequest('GET_PRODUCTS_HTML_BY_VS',data)
+export function initProducts(data) {
+  return getRequest('INIT_PRODUCTS',data)
 }
 
 export function getProductCategories(data) {
@@ -36,16 +39,21 @@ export function getProductsByCategory(data) {
   return getRequest('GET_PRODUCTS_BY_CATEGORY', {on_sale:true,purchasable:true,status:'publish',...data})
 }
 
-export function getVsCreditStatus(data) {
-  return getRequest('GET_VS_CREDIT_STATUS',data)
-}
-
-export function initProducts(data) {
-  return getRequest('INIT_PRODUCTS',data)
-}
-
 export function getProductHandleHistory(data) {
   return getRequest('GET_PRODUCT_HANDLE_HISTORY',data)
 }
 
-export default {initProducts, getVsCreditStatus ,getProductCategories, getProductsByCategory,getProductHandleHistory,getProductsHtmlByVs}
+export function getProductsHtmlByVs(data) {
+  return getRequest('GET_PRODUCTS_HTML_BY_VS',data)
+}
+
+export function getProductHtml(data) {
+  return getRequest('GET_PRODUCT_HTML',data)
+}
+
+
+export function getProductListHtml(data) {
+  return getRequest('GET_PRODUCT_LIST_HTML',data)
+}
+
+export default {initProducts, getVsCreditStatus ,getProductCategories, getProductsByCategory,getProductHandleHistory,getProductsHtmlByVs,getProductHtml,getProductListHtml}

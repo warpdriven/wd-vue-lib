@@ -124,4 +124,22 @@ export default {
     right: 0;
 }
 
+.wd-visual-search /deep/ ul{
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  vertical-align: middle;
+  list-style: none;
+  margin: 0 -10px;
+  clear: both;
+}
+.wd-visual-search /deep/ ul li{
+  width: 25%;
+  clear: both;
+  display: inline-block;
+  float: none!important;
+  margin: 0!important;
+  white-space: normal;
+}
+
 </style>
