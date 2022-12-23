@@ -23,25 +23,25 @@
     <el-form :action="action" :method="method" :model="form" class="setting-form">
       <slot name="header"></slot>
       <el-form-item label="API Key">
-        <el-input v-model="form.wd_api_key"></el-input>
+        <el-input v-model="form.wd_api_key" name="wd_api_key"></el-input>
       </el-form-item>
       <el-form-item label="Search Product List Title">
-        <el-input v-model="form.wd_search_product_list_title"></el-input>
+        <el-input v-model="form.wd_search_product_list_title" name="wd_search_product_list_title"></el-input>
       </el-form-item>
       <el-form-item label="Icon Size">
-        <el-input v-model="form.wd_search_product_icon_size"></el-input>
+        <el-input v-model="form.wd_search_product_icon_size" name="wd_search_product_list_title"></el-input>
       </el-form-item>
       <el-form-item label="Icon Top">
-        <el-input v-model="form.wd_search_product_icon_top"></el-input>
+        <el-input v-model="form.wd_search_product_icon_top" name="wd_search_product_icon_top"></el-input>
       </el-form-item>
       <el-form-item label="Icon Left">
-        <el-input v-model="form.wd_search_product_icon_left"></el-input>
+        <el-input v-model="form.wd_search_product_icon_left" name="wd_search_product_icon_left"></el-input>
       </el-form-item>
       <el-form-item label="Icon Right">
-        <el-input v-model="form.wd_search_product_icon_right"></el-input>
+        <el-input v-model="form.wd_search_product_icon_right" name="wd_search_product_icon_right"></el-input>
       </el-form-item>
       <el-form-item label="Icon Bottom">
-        <el-input v-model="form.wd_search_product_icon_bottom"></el-input>
+        <el-input v-model="form.wd_search_product_icon_bottom" name="wd_search_product_icon_bottom"></el-input>
       </el-form-item>
       <slot name="footer"></slot>
     </el-form>
