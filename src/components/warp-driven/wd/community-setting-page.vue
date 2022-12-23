@@ -37,7 +37,9 @@
               v-model="form.wd_search_product_list_enable"
               name="wd_search_product_list_enable"
               active-color="#13ce66"
-              inactive-color="#ff4949">
+              inactive-color="#ff4949"
+              :active-value="true"
+              :inactive-value="false">
             </el-switch>
           </el-form-item>
         </el-tab-pane>
@@ -62,7 +64,9 @@
               v-model="form.wd_search_product_enable"
               name="wd_search_product_enable"
               active-color="#13ce66"
-              inactive-color="#ff4949">
+              inactive-color="#ff4949"
+              :active-value="true"
+              :inactive-value="false">
             </el-switch>
           </el-form-item>
         </el-tab-pane>
