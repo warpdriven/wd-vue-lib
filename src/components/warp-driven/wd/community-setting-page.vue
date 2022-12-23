@@ -39,7 +39,8 @@
               active-color="#13ce66"
               inactive-color="#ff4949"
               :active-value="true"
-              :inactive-value="false">
+              :inactive-value="false"
+              @change="WidgetEnableHandle">
             </el-switch>
           </el-form-item>
         </el-tab-pane>
@@ -59,7 +60,7 @@
           <el-form-item label="Icon Bottom">
             <el-input v-model="form.wd_search_product_icon_bottom" name="wd_search_product_icon_bottom"></el-input>
           </el-form-item>
-          <el-form-item label="Enable">
+          <el-form-item label="Product List Page Search Enable">
             <el-switch
               v-model="form.wd_search_product_enable"
               name="wd_search_product_enable"
@@ -71,7 +72,9 @@
           </el-form-item>
         </el-tab-pane>
       </el-tabs>
-      <slot name="footer"></slot>
+      <slot name="footer">
+        <el-button native-type="submit"></el-button>
+      </slot>
     </el-form>
   </div>
 </template>
@@ -96,14 +99,14 @@ export default {
               return {
                 wd_api_key:'',
                 wd_search_product_list_title:'Visual Search',
-                wd_search_product_list_enable: true,
+                wd_search_product_list_enable: 'no',
                 wd_search_product_icon_bottom:true,
                 wd_search_product_icon_size:'30px',
                 wd_search_product_icon_top:'',
                 wd_search_product_icon_left:'',
                 wd_search_product_icon_right:'0px',
                 wd_search_product_icon_bottom:'0px',
-                wd_search_product_enable:true
+                wd_search_product_enable:'no'
               }
             }
         }
@@ -114,13 +117,13 @@ export default {
           form:{
             wd_api_key:this.data.wd_api_key||'',
             wd_search_product_list_title:this.data.wd_search_product_list_title||'',
-            wd_search_product_list_enable: this.data.wd_search_product_list_enable||'',
+            wd_search_product_list_enable: this.data.wd_search_product_list_enable==='no',
             wd_search_product_icon_size:this.data.wd_search_product_icon_size||'',
             wd_search_product_icon_top:this.data.wd_search_product_icon_top||'',
             wd_search_product_icon_left:this.data.wd_search_product_icon_left||'',
             wd_search_product_icon_right:this.data.wd_search_product_icon_right||'',
             wd_search_product_icon_bottom:this.data.wd_search_product_icon_bottom||'',
-            wd_search_product_enable:this.data.wd_search_product_enable
+            wd_search_product_enable:this.data.wd_search_product_enable==='no'
           }
         };
     },
