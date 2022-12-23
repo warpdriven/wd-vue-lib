@@ -196,6 +196,10 @@ export default {
   padding: 0px;
 }
 
+.el-input{
+  width:600px;
+}
+
 .el-input /deep/ .el-input__inner:focus{
   border: none;
   border-radius: 0px;
