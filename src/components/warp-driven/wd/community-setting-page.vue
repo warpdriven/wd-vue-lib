@@ -79,12 +79,12 @@ export default {
     data() {
         return {
           form:{
-            wd_search_product_list_title:this.wd_search_product_list_title||'',
-            wd_search_product_icon_size:this.wd_search_product_icon_size||'',
-            wd_search_product_icon_top:this.wd_search_product_icon_top||'',
-            wd_search_product_icon_left:this.wd_search_product_icon_left||'',
-            wd_search_product_icon_right:this.wd_search_product_icon_right||'',
-            wd_search_product_icon_bottom:this.wd_search_product_icon_bottom||'',
+            wd_search_product_list_title:this.data.wd_search_product_list_title||'',
+            wd_search_product_icon_size:this.data.wd_search_product_icon_size||'',
+            wd_search_product_icon_top:this.data.wd_search_product_icon_top||'',
+            wd_search_product_icon_left:this.data.wd_search_product_icon_left||'',
+            wd_search_product_icon_right:this.data.wd_search_product_icon_right||'',
+            wd_search_product_icon_bottom:this.data.wd_search_product_icon_bottom||'',
           }
         };
     },
