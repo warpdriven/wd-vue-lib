@@ -186,6 +186,10 @@ export default {
   color: cornflowerblue;
 }
 
+.setting-page .setting-form{
+  padding: 10px;
+}
+
 .setting-page .setting-form .el-collapse /deep/ .el-collapse-item .el-collapse-item__content{
   padding:0px 20px;
 }
@@ -199,7 +203,6 @@ export default {
   border-radius: 0px;
   padding: 0px;
 }
-
 .el-input /deep/ .el-input__inner:focus{
   border: none;
   border-radius: 0px;
