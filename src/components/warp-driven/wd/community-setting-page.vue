@@ -22,27 +22,51 @@
     </el-container>
     <el-form :action="action" :method="method" :model="form" class="setting-form">
       <slot name="header"></slot>
-      <el-form-item label="API Key">
-        <el-input v-model="form.wd_api_key" name="wd_api_key"></el-input>
-      </el-form-item>
-      <el-form-item label="Search Product List Title">
-        <el-input v-model="form.wd_search_product_list_title" name="wd_search_product_list_title"></el-input>
-      </el-form-item>
-      <el-form-item label="Icon Size">
-        <el-input v-model="form.wd_search_product_icon_size" name="wd_search_product_list_title"></el-input>
-      </el-form-item>
-      <el-form-item label="Icon Top">
-        <el-input v-model="form.wd_search_product_icon_top" name="wd_search_product_icon_top"></el-input>
-      </el-form-item>
-      <el-form-item label="Icon Left">
-        <el-input v-model="form.wd_search_product_icon_left" name="wd_search_product_icon_left"></el-input>
-      </el-form-item>
-      <el-form-item label="Icon Right">
-        <el-input v-model="form.wd_search_product_icon_right" name="wd_search_product_icon_right"></el-input>
-      </el-form-item>
-      <el-form-item label="Icon Bottom">
-        <el-input v-model="form.wd_search_product_icon_bottom" name="wd_search_product_icon_bottom"></el-input>
-      </el-form-item>
+      <el-tabs v-model="activeName">
+        <el-tab-pane label="API Key Setting" name="first">
+          <el-form-item label="API Key">
+            <el-input v-model="form.wd_api_key" name="wd_api_key"></el-input>
+          </el-form-item>
+        </el-tab-pane>
+        <el-tab-pane label="Product Detail Page Widget Setting" name="second">
+          <el-form-item label="Search Product List Title">
+            <el-input v-model="form.wd_search_product_list_title" name="wd_search_product_list_title"></el-input>
+          </el-form-item>
+          <el-form-item label="Enable">
+            <el-switch
+              v-model="form.wd_search_product_list_enable"
+              name="wd_search_product_list_enable"
+              active-color="#13ce66"
+              inactive-color="#ff4949">
+            </el-switch>
+          </el-form-item>
+        </el-tab-pane>
+        <el-tab-pane label="Product List Page Search Setting" name="third">
+          <el-form-item label="Icon Size">
+            <el-input v-model="form.wd_search_product_icon_size" name="wd_search_product_icon_size"></el-input>
+          </el-form-item>
+          <el-form-item label="Icon Top">
+            <el-input v-model="form.wd_search_product_icon_top" name="wd_search_product_icon_top"></el-input>
+          </el-form-item>
+          <el-form-item label="Icon Left">
+            <el-input v-model="form.wd_search_product_icon_left" name="wd_search_product_icon_left"></el-input>
+          </el-form-item>
+          <el-form-item label="Icon Right">
+            <el-input v-model="form.wd_search_product_icon_right" name="wd_search_product_icon_right"></el-input>
+          </el-form-item>
+          <el-form-item label="Icon Bottom">
+            <el-input v-model="form.wd_search_product_icon_bottom" name="wd_search_product_icon_bottom"></el-input>
+          </el-form-item>
+          <el-form-item label="Enable">
+            <el-switch
+              v-model="form.wd_search_product_enable"
+              name="wd_search_product_enable"
+              active-color="#13ce66"
+              inactive-color="#ff4949">
+            </el-switch>
+          </el-form-item>
+        </el-tab-pane>
+      </el-tabs>
       <slot name="footer"></slot>
     </el-form>
   </div>
@@ -66,25 +90,33 @@ export default {
             type: Object,
             default: ()=>{
               return {
+                wd_api_key:'',
                 wd_search_product_list_title:'Visual Search',
+                wd_search_product_list_enable: true,
+                wd_search_product_icon_bottom:true,
                 wd_search_product_icon_size:'30px',
                 wd_search_product_icon_top:'',
                 wd_search_product_icon_left:'',
                 wd_search_product_icon_right:'0px',
-                wd_search_product_icon_bottom:'0px'
+                wd_search_product_icon_bottom:'0px',
+                wd_search_product_enable:true
               }
             }
         }
     },
     data() {
         return {
+          activeName:'first',
           form:{
+            wd_api_key:this.data.wd_api_key||'',
             wd_search_product_list_title:this.data.wd_search_product_list_title||'',
+            wd_search_product_list_enable: this.data.wd_search_product_list_enable||'',
             wd_search_product_icon_size:this.data.wd_search_product_icon_size||'',
             wd_search_product_icon_top:this.data.wd_search_product_icon_top||'',
             wd_search_product_icon_left:this.data.wd_search_product_icon_left||'',
             wd_search_product_icon_right:this.data.wd_search_product_icon_right||'',
             wd_search_product_icon_bottom:this.data.wd_search_product_icon_bottom||'',
+            wd_search_product_enable:this.data.wd_search_product_enable
           }
         };
     },
@@ -149,7 +181,7 @@ export default {
 }
 
 .setting-page .setting-form{
-  width: 600px;
+  width: 960px;
   margin: 20px;
 }
 

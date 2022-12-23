@@ -36,41 +36,6 @@
       </el-col>
     </el-row>
     <optimize-page v-show="authenticated&&!is_expired" @task-status="loadTaskStatus"></optimize-page>
-    <!-- <el-divider content-position="left">Recommend Plugins</el-divider>
-    <div class="plugin-box">
-      <el-row>
-        <el-col :sm="12" :lg="8">
-          <el-result subTitle="Initialize visual search">
-            <template #icon>
-
-            </template>
-            <template #extra>
-              <el-button type="primary" size="mini">link</el-button>
-            </template>
-          </el-result>
-        </el-col>
-        <el-col :sm="12" :lg="8">
-          <el-result subTitle="Remove pictrue background">
-            <template #icon>
-              
-            </template>
-            <template #extra>
-              <el-button type="primary" size="mini">link</el-button>
-            </template>
-          </el-result>
-        </el-col>
-        <el-col :sm="12" :lg="8">
-          <el-result subTitle="Conversion to webp">
-            <template #icon>
-              
-            </template>
-            <template #extra>
-              <el-button type="primary" size="mini">link</el-button>
-            </template>
-          </el-result>
-        </el-col>
-      </el-row>
-    </div> -->
   </div>
 </template>
 
