@@ -20,7 +20,7 @@
       </el-aside>
       <el-main><el-link :icon="'Help'" type="primary" target="_blank" href="https://warp-driven.com/contact/">&nbsp;Need help or have question?</el-link></el-main>
     </el-container>
-    <el-form :action="action" :post="post" :model="form" class="setting-form">
+    <el-form :action="action" :method="method" :model="form" class="setting-form">
       <slot name="header"></slot>
       <el-form-item label="API Key">
         <el-input v-model="form.wd_api_key"></el-input>
@@ -62,7 +62,7 @@ export default {
           typeof:String,
           default:"post"
         },
-        form: {
+        data: {
             type: Object,
             default: ()=>{
               return {
@@ -77,7 +77,11 @@ export default {
         }
     },
     data() {
-        return {};
+        return {
+          form:{
+            ...this.data
+          }
+        };
     },
     mounted() {
     },
