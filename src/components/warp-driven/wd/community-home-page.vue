@@ -42,6 +42,7 @@
 <script>
 
 import optimizePage from './community-optimize-page.vue';
+import { User,Key,Setting } from '@element-plus/icons-vue';
 
 export default {
   props:{
@@ -58,7 +59,7 @@ export default {
       plan_start_date:null
     }
   },
-  components:{optimizePage},
+  components:{optimizePage,User,Key,Setting},
   methods:{
     loadTaskStatus(result){
       if(result.code === 403){

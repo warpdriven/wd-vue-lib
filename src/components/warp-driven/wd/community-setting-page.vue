@@ -22,13 +22,13 @@
     </el-container>
     <el-form :action="action" :method="method" :model="form" class="setting-form">
       <slot name="header"></slot>
-      <el-tabs v-model="activeName">
-        <el-tab-pane label="API Key Setting" name="first">
+      <el-collapse v-model="activeNames">
+        <el-collapse-item title="API Key Setting" name="1">
           <el-form-item label="API Key">
             <el-input v-model="form.wd_api_key" name="wd_api_key"></el-input>
           </el-form-item>
-        </el-tab-pane>
-        <el-tab-pane label="Product Detail Page Widget Setting" name="second">
+        </el-collapse-item>  
+        <el-collapse-item title="Product Detail Page Widget Setting" name="2">
           <el-form-item label="Search Product List Title">
             <el-input v-model="form.wd_search_product_list_title" name="wd_search_product_list_title"></el-input>
           </el-form-item>
@@ -37,14 +37,11 @@
               v-model="form.wd_search_product_list_enable"
               name="wd_search_product_list_enable"
               active-color="#13ce66"
-              inactive-color="#ff4949"
-              :active-value="true"
-              :inactive-value="false"
-              @change="WidgetEnableHandle">
+              inactive-color="#ff4949">
             </el-switch>
           </el-form-item>
-        </el-tab-pane>
-        <el-tab-pane label="Product List Page Search Setting" name="third">
+        </el-collapse-item>
+        <el-collapse-item title="Product List Page Search Setting" name="3">
           <el-form-item label="Icon Size">
             <el-input v-model="form.wd_search_product_icon_size" name="wd_search_product_icon_size"></el-input>
           </el-form-item>
@@ -65,13 +62,11 @@
               v-model="form.wd_search_product_enable"
               name="wd_search_product_enable"
               active-color="#13ce66"
-              inactive-color="#ff4949"
-              :active-value="true"
-              :inactive-value="false">
+              inactive-color="#ff4949">
             </el-switch>
           </el-form-item>
-        </el-tab-pane>
-      </el-tabs>
+        </el-collapse-item>
+      </el-collapse>
       <slot name="footer">
         <el-button native-type="submit"></el-button>
       </slot>
@@ -113,17 +108,17 @@ export default {
     },
     data() {
         return {
-          activeName:'first',
+          activeNames:['1','2','3'],
           form:{
             wd_api_key:this.data.wd_api_key||'',
             wd_search_product_list_title:this.data.wd_search_product_list_title||'',
-            wd_search_product_list_enable: this.data.wd_search_product_list_enable==='no',
+            wd_search_product_list_enable: this.data.wd_search_product_list_enable==='on',
             wd_search_product_icon_size:this.data.wd_search_product_icon_size||'',
             wd_search_product_icon_top:this.data.wd_search_product_icon_top||'',
             wd_search_product_icon_left:this.data.wd_search_product_icon_left||'',
             wd_search_product_icon_right:this.data.wd_search_product_icon_right||'',
             wd_search_product_icon_bottom:this.data.wd_search_product_icon_bottom||'',
-            wd_search_product_enable:this.data.wd_search_product_enable==='no'
+            wd_search_product_enable:this.data.wd_search_product_enable==='on'
           }
         };
     },
@@ -134,6 +129,10 @@ export default {
 </script>
 
 <style scoped>
+
+.setting-page{
+  background-color: #ffffff;
+}
 
 .setting-page .el-container .el-aside{
   background-color:#2c3e50;
@@ -187,9 +186,21 @@ export default {
   color: cornflowerblue;
 }
 
-.setting-page .setting-form{
-  width: 960px;
-  margin: 20px;
+.setting-page .setting-form .el-collapse /deep/ .el-collapse-item .el-collapse-item__content{
+  padding:0px 20px;
+}
+
+.el-input /deep/ .el-input__inner{
+  border: none;
+  border-radius: 0px;
+  padding: 0px;
+}
+
+.el-input /deep/ .el-input__inner:focus{
+  border: none;
+  border-radius: 0px;
+  box-shadow: none;
+  outline: none;
 }
 
 </style>
