@@ -1,18 +1,21 @@
 <template>
-  <visual-search :product_id="2276"></visual-search>
+  <!-- <visual-search :product_id="2276"></visual-search> -->
+  <communityHomePage></communityHomePage>
 </template>
 
 <script>
 
-//import homePage from './components/warp-driven/wd/home-page.vue'
-//import communityHomePage from './components/warp-driven/wd/community-home-page.vue'
-import visualSearch from './components/warp-driven/wd/VisualSearch.vue'
+// import homePage from './components/warp-driven/wd/home-page.vue'
+import communityHomePage from './components/warp-driven/wd/community-home-page.vue'
+// import visualSearch from './components/warp-driven/wd/VisualSearch.vue'
 
 export default {
   name: 'App',
   components: {
-    visualSearch
-  }
+    // visualSearch,
+    // homePage,
+    communityHomePage
+}
 }
 </script>
 
@@ -22,8 +25,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: #2c3e50
 }
 
 </style>

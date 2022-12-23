@@ -1,6 +1,6 @@
 <template>
   <div class='optimize-page'>
-    <el-tag>optimize page</el-tag>
+    <!-- <el-tag>optimize page</el-tag> -->
     <el-divider content-position="left">Select Product Cate</el-divider>
     <el-row>
       <el-col :span="2">&nbsp;</el-col>
