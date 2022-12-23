@@ -190,14 +190,14 @@ export default {
   padding:0px 20px;
 }
 
+.el-form-item{
+  width:600px;
+}
+
 .el-input /deep/ .el-input__inner{
   border: none;
   border-radius: 0px;
   padding: 0px;
-}
-
-.el-input{
-  width:600px;
 }
 
 .el-input /deep/ .el-input__inner:focus{
