@@ -156,6 +156,7 @@ export default {
 }
 
 .setting-page .logo-box .el-row .logo-img{
+  margin-right: 5px;
   width: 20px;
   float: left;
   font-style: normal;

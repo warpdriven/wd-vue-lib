@@ -10,7 +10,7 @@
             <User></User>
           </template>
           <template #extra>
-            <el-link href="https://erp.warp-driven.com/website_info" target="_blank"><el-button type="primary" size="mini">SIGN UP,IT'S FREE!</el-button></el-link>
+            <el-link href="https://warp-driven.com/my-account/" target="_blank"><el-button type="primary" size="mini">SIGN UP,IT'S FREE!</el-button></el-link>
           </template>
         </el-result>
       </el-col>
