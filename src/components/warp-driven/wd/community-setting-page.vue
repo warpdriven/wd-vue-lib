@@ -29,10 +29,7 @@
           </el-form-item>
         </el-collapse-item>  
         <el-collapse-item title="Product Detail Page Widget Setting" name="2">
-          <el-form-item label="Search Product List Title">
-            <el-input v-model="form.wd_search_product_list_title" name="wd_search_product_list_title"></el-input>
-          </el-form-item>
-          <el-form-item label="Enable">
+          <el-form-item label="Product Detail Page Widget Enable">
             <el-switch
               v-model="form.wd_search_product_list_enable"
               name="wd_search_product_list_enable"
@@ -40,8 +37,19 @@
               inactive-color="#ff4949">
             </el-switch>
           </el-form-item>
+          <el-form-item label="Search Product List Title">
+            <el-input v-model="form.wd_search_product_list_title" name="wd_search_product_list_title"></el-input>
+          </el-form-item>
         </el-collapse-item>
         <el-collapse-item title="Product List Page Search Setting" name="3">
+          <el-form-item label="Product List Page Search Enable">
+            <el-switch
+              v-model="form.wd_search_product_enable"
+              name="wd_search_product_enable"
+              active-color="#13ce66"
+              inactive-color="#ff4949">
+            </el-switch>
+          </el-form-item>
           <el-form-item label="Icon Size">
             <el-input v-model="form.wd_search_product_icon_size" name="wd_search_product_icon_size"></el-input>
           </el-form-item>
@@ -56,14 +64,6 @@
           </el-form-item>
           <el-form-item label="Icon Bottom">
             <el-input v-model="form.wd_search_product_icon_bottom" name="wd_search_product_icon_bottom"></el-input>
-          </el-form-item>
-          <el-form-item label="Product List Page Search Enable">
-            <el-switch
-              v-model="form.wd_search_product_enable"
-              name="wd_search_product_enable"
-              active-color="#13ce66"
-              inactive-color="#ff4949">
-            </el-switch>
           </el-form-item>
         </el-collapse-item>
       </el-collapse>
