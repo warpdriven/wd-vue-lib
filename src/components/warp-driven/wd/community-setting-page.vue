@@ -95,7 +95,6 @@ export default {
                 wd_api_key:'',
                 wd_search_product_list_title:'Visual Search',
                 wd_search_product_list_enable: 'no',
-                wd_search_product_icon_bottom:true,
                 wd_search_product_icon_size:'30px',
                 wd_search_product_icon_top:'',
                 wd_search_product_icon_left:'',
