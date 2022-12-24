@@ -7,27 +7,9 @@ window.WD_API_SETTING={
         method:"POST",
         contentType: "application/x-www-form-urlencoded"
     },
-    GET_VS_INIT_STATUS:{
+    GET_VS_CREDIT_STATUS:{
         ajax_url:'/api/wp-admin/admin-ajax.php',
-        action:"wd_get_vs_init_status",
-        method:"POST",
-        contentType: "application/x-www-form-urlencoded"
-    },
-    GET_PRODUCT_HTML:{
-        ajax_url:"/api/wp-admin/admin-ajax.php",
-        action:"wd_get_woo_product_html",
-        method:"POST",
-        contentType: "application/x-www-form-urlencoded"
-    },
-    GET_PRODUCTS_HTML_BY_VS:{
-        ajax_url:"/api/wp-admin/admin-ajax.php",
-        action:"wd_get_woo_products_html_by_vs",
-        method:"POST",
-        contentType: "application/x-www-form-urlencoded"
-    },
-    GET_PRODUCT_LIST_HTML:{
-        ajax_url:"/api/wp-admin/admin-ajax.php",
-        action:"wd_get_woo_product_list_html",
+        action:"wd_get_vs_credit_status",
         method:"POST",
         contentType: "application/x-www-form-urlencoded"
     },
@@ -46,6 +28,24 @@ window.WD_API_SETTING={
     GET_PRODUCTS_BY_CATEGORY:{
         ajax_url:'/api/wp-json/wd/v3/products',
         method:"GET"
+    },
+    GET_PRODUCT_HTML:{
+        ajax_url:"/api/wp-admin/admin-ajax.php",
+        action:"wd_get_woo_product_html",
+        method:"POST",
+        contentType: "application/x-www-form-urlencoded"
+    },
+    GET_PRODUCTS_HTML_BY_VS:{
+        ajax_url:"/api/wp-admin/admin-ajax.php",
+        action:"wd_get_woo_products_html_by_vs",
+        method:"POST",
+        contentType: "application/x-www-form-urlencoded"
+    },
+    GET_PRODUCT_LIST_HTML:{
+        ajax_url:"/api/wp-admin/admin-ajax.php",
+        action:"wd_get_woo_product_list_html",
+        method:"POST",
+        contentType: "application/x-www-form-urlencoded"
     }
 }
 
@@ -54,7 +54,6 @@ export function config(config){
 }
 
 export function api(){
-    console.info(window.WD_API_SETTING);
     return window.WD_API_SETTING
 }
 

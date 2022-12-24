@@ -9,7 +9,8 @@ function getRequest(API_KEY,data){
   }
   if(setting[API_KEY].method === "POST"||setting[API_KEY].method==="post"){
     params.headers = {
-      "Content-Type":setting[API_KEY].contentType
+      "Content-Type":setting[API_KEY].contentType,
+      "X-API-Key":"wheqjkewwe4f223jqowe18"
     }
     params.data = {
       action:setting[API_KEY].action,...data
@@ -22,24 +23,37 @@ function getRequest(API_KEY,data){
   return request(params)
 }
 
-export function getProductCategories(data) {
-  return getRequest('GET_PRODUCT_CATEGORIES',data)
-}
-
-export function getProductsByCategory(data) {
-  return getRequest('GET_PRODUCTS_BY_CATEGORY',data)
-}
-
-export function getVsInitStatus(data) {
-  return getRequest('GET_VS_INIT_STATUS',data)
+export function getVsCreditStatus(data) {
+  return getRequest('GET_VS_CREDIT_STATUS',data)
 }
 
 export function initProducts(data) {
   return getRequest('INIT_PRODUCTS',data)
 }
 
+export function getProductCategories(data) {
+  return getRequest('GET_PRODUCT_CATEGORIES',data)
+}
+
+export function getProductsByCategory(data) {
+  return getRequest('GET_PRODUCTS_BY_CATEGORY', {on_sale:true,purchasable:true,status:'publish',...data})
+}
+
 export function getProductHandleHistory(data) {
   return getRequest('GET_PRODUCT_HANDLE_HISTORY',data)
 }
 
-export default {initProducts, getVsInitStatus ,getProductCategories, getProductsByCategory,getProductHandleHistory}
+export function getProductsHtmlByVs(data) {
+  return getRequest('GET_PRODUCTS_HTML_BY_VS',data)
+}
+
+export function getProductHtml(data) {
+  return getRequest('GET_PRODUCT_HTML',data)
+}
+
+
+export function getProductListHtml(data) {
+  return getRequest('GET_PRODUCT_LIST_HTML',data)
+}
+
+export default {initProducts, getVsCreditStatus ,getProductCategories, getProductsByCategory,getProductHandleHistory,getProductsHtmlByVs,getProductHtml,getProductListHtml}

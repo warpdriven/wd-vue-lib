@@ -1,4 +1,5 @@
 const { defineConfig } = require('@vue/cli-service')
+const webpack = require('webpack')
 module.exports = defineConfig({
   transpileDependencies: true,
   publicPath: '/',
@@ -11,7 +12,8 @@ module.exports = defineConfig({
     open: true,
     proxy: {
       '/api/': {
-        target: "https://stg.woolworlds.com",
+        // target: "http://localhost:9999",
+        target: "https://stg.woolworlds.com/",
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
@@ -25,5 +27,14 @@ module.exports = defineConfig({
         }
       }
     }
+  },
+  configureWebpack: {
+    plugins: [
+      new webpack.ProvidePlugin({
+        $:"jquery",
+        jQuery:"jquery",
+        "windows.jQuery":"jquery"
+      })
+    ]
   }
 })

@@ -1,6 +1,6 @@
 <template>
   <div class='optimize-page'>
-    <el-tag>optimize page</el-tag>
+    <!-- <el-tag>optimize page</el-tag> -->
     <el-divider content-position="left">Select Product Cate</el-divider>
     <el-row>
       <el-col :span="2">&nbsp;</el-col>
@@ -35,14 +35,14 @@
     <el-row>
       <el-col :span="1">&nbsp;</el-col>
       <el-col :span="22">
-        <el-progress v-show="task_status==='RUNNING'" :text-inside="true" :color='colors' :stroke-width="24" :percentage="task_progress" status="success"></el-progress>
+        <el-progress :text-inside="true" :color='colors' :stroke-width="24" :percentage="task_progress" status="success"></el-progress>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-import {initProducts, getVsInitStatus ,getProductCategories ,getProductsByCategory} from '../../../api/wd-common-api'
+import {initProducts, getVsCreditStatus ,getProductCategories ,getProductsByCategory} from '../../../api/wd-common-api'
 export default {
   data() {
     return {
@@ -58,6 +58,7 @@ export default {
       webp_plan:0,
       bk_rm_left:0,
       bk_rm_plan:0,
+      authenticated:true,
       colors: [
         { color: '#f56c6c', percentage: 20 },
         { color: '#e6a23c', percentage: 40 },
@@ -83,7 +84,7 @@ export default {
     }
   },
   mounted() {
-    this.getVsInitStatus();
+    this.getVsCreditStatus();
     this.queryCatetgoryTree()
   },
   methods: {
@@ -100,13 +101,16 @@ export default {
         this.bk_rm_plan = taskStaus.bk_rm_plan
         this.task_status=taskStaus.task_status
     },
-    getVsInitStatus(){
-      getVsInitStatus().then(res=>{
+    getVsCreditStatus(){
+      this.loading = true
+      getVsCreditStatus().then(res=>{
+        this.$emit("task-status",res)
         if(res.status){
           this.loadTaskData(res.data)
           if(res.data.task_status==="RUNNING"){
-            setTimeout(this.getVsInitStatus,500)
+            setTimeout(this.getVsCreditStatus,1000)
           }else{
+            this.task_progress = 0
             this.loading = false
           }
         }
@@ -143,15 +147,12 @@ export default {
         return
       }
       this.loading = true
-      this.task_progress = 0
       getProductsByCategory({category:checkedKeys.join(","),per_page:100}).then(res=>{
           initProducts({products:res}).then(result=>{
-          this.getVsInitStatus()
-            if(!result.status){
-              this.$message({
-                type: 'error',
-                message: result.msg||result.detail
-              });   
+            if(result.status){
+              this.getVsCreditStatus()
+            }else{
+              this.loading = false
             }
           })
       })
