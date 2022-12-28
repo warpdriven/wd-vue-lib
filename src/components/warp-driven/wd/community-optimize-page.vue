@@ -110,8 +110,12 @@ export default {
           if(res.data.task_status==="RUNNING"){
             setTimeout(this.getVsCreditStatus,1000)
           }else{
-            this.task_progress = 0
             this.loading = false
+            if(res.data.task_status==="SUCCESS"){
+              this.task_progress= 100
+            }else{
+              this.task_progress=0
+            }
           }
         }
       })
