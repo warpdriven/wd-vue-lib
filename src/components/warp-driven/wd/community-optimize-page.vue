@@ -27,9 +27,9 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="1">&nbsp;</el-col>
-      <el-col :span="22">
-        <el-button type="primary" @click="startBulkOptimization" :loading="loading" :disabled="disabled">Start Bulk Optimization</el-button>
+      <el-col :span="10">&nbsp;</el-col>
+      <el-col :span="14">
+        <el-button type="primary" @click="startBulkOptimization" :loading="loading" :disabled="disabled">start</el-button>
       </el-col>
     </el-row>
     <el-row>
@@ -110,8 +110,12 @@ export default {
           if(res.data.task_status==="RUNNING"){
             setTimeout(this.getVsCreditStatus,1000)
           }else{
-            this.task_progress = 0
             this.loading = false
+            if(res.data.task_status==="SUCCESS"){
+              this.task_progress= 100
+            }else{
+              this.task_progress=0
+            }
           }
         }
       })
@@ -141,20 +145,45 @@ export default {
       });
       parentNode['children'] = childNodes
     },
+    walkGetProductCountByCategroy(nodes){
+      let count = 0;
+      if(nodes){
+        nodes.forEach(node=>{
+          count += node.count
+        })
+      }
+      return count
+    },
     startBulkOptimization(){
       const checkedKeys = this.$refs['tree'].getCheckedKeys()
+      const checkedNodes = this.$refs['tree'].getCheckedNodes();
       if(checkedKeys.length === 0){
+        return
+      }
+      const count=this.walkGetProductCountByCategroy(checkedNodes)
+
+      if(count>this.image_vector_left){
+        this.$message.error({
+          message: `Select up to image vector left number ${this.image_vector_left} messages`
+        })
+        return
+      }
+
+      if(count > 100){
+        this.$message.error({
+          message: "Select up to 100 messages"
+        })
         return
       }
       this.loading = true
       getProductsByCategory({category:checkedKeys.join(","),per_page:100}).then(res=>{
-          initProducts({products:res}).then(result=>{
-            if(result.status){
-              this.getVsCreditStatus()
-            }else{
-              this.loading = false
-            }
-          })
+        initProducts({products:res}).then(result=>{
+          if(result.status){
+            this.getVsCreditStatus()
+          }else{
+            this.loading = false
+          }
+        })
       })
     }  
   }
