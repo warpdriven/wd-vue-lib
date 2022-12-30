@@ -36,7 +36,7 @@ export function getProductCategories(data) {
 }
 
 export function getProductsByCategory(data) {
-  return getRequest('GET_PRODUCTS_BY_CATEGORY', {on_sale:true,purchasable:true,status:'publish',...data})
+  return getRequest('GET_PRODUCTS_BY_CATEGORY', {purchasable:true,status:'publish',...data})
 }
 
 export function getProductHandleHistory(data) {
