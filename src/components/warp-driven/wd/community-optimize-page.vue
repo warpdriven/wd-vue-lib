@@ -21,7 +21,7 @@
           :stroke-width='20'
           :width='350'
           :color='colors'
-          :percentage='image_vector_plan ===0?0:(image_vector_left/image_vector_plan)*100'
+          :percentage='image_vector_plan ===0?0:towNumber((image_vector_left/image_vector_plan)*100)'
           :format='InitializeFormat'
         ></el-progress>
       </el-col>
@@ -88,6 +88,9 @@ export default {
     this.queryCatetgoryTree()
   },
   methods: {
+    towNumber(val) {      
+      return val.toFixed(2)    
+    },
     InitializeFormat(percentage) {
       return `${percentage}%(${this.image_vector_left}/${this.image_vector_plan})\n Initialize visual search`
     },
