@@ -83,6 +83,10 @@ export default {
 
 <style scoped>
 
+.wd-visual-search .wd-left-control,.wd-visual-search .wd-right-control {
+      display: none;
+}
+
 @media (min-width: 992px){
   .wd-visual-search{
       width: 100%;
