@@ -83,63 +83,65 @@ export default {
 
 <style scoped>
 
-.wd-visual-search{
-    width: 100%;
-    display: flex;
+@media (min-width: 992px){
+  .wd-visual-search{
+      width: 100%;
+      display: flex;
+      position: relative;
+  }
+
+  .wd-visual-search .wd-visual-search-list{
+      width: 100%;
+      min-height: 300px;
+      white-space: nowrap;
+      overflow-x: hidden;
+  }
+
+  .wd-visual-search .wd-left-control,.wd-visual-search .wd-right-control {
+      display: block;
+      position: absolute;
+      background-color: white;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+      border-radius: 100%;
+      width: 40px;
+      height: 40px;
+      line-height: 36px;
+      text-align: center;
+      font-size: 18pt;
+      top: 40%;
+      opacity: 0.75;
+      z-index: 2;
+  }
+
+  .wd-visual-search .wd-left-control:hover, .wd-visual-search .wd-right-control:hover, .wd-visual-search-item-box:hover {
+      cursor: pointer;
+  }
+
+  .wd-visual-search .wd-left-control {
+      left: 0;
+  }
+
+  .wd-visual-search .wd-right-control {
+      right: 0;
+  }
+
+  .wd-visual-search /deep/ ul{
     position: relative;
-}
-
-.wd-visual-search .wd-visual-search-list{
+    display: inline-block;
     width: 100%;
-    min-height: 300px;
-    white-space: nowrap;
-    overflow-x: hidden;
-}
-
-.wd-visual-search .wd-left-control,.wd-visual-search .wd-right-control {
-    display: block;
-    position: absolute;
-    background-color: white;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
-    border-radius: 100%;
-    width: 40px;
-    height: 40px;
-    line-height: 36px;
-    text-align: center;
-    font-size: 18pt;
-    top: 40%;
-    opacity: 0.75;
-    z-index: 2;
-}
-
-.wd-visual-search .wd-left-control:hover, .wd-visual-search .wd-right-control:hover, .wd-visual-search-item-box:hover {
-    cursor: pointer;
-}
-
-.wd-visual-search .wd-left-control {
-    left: 0;
-}
-
-.wd-visual-search .wd-right-control {
-    right: 0;
-}
-
-.wd-visual-search /deep/ ul{
-  position: relative;
-  display: inline-block;
-  width: 100%;
-  vertical-align: middle;
-  list-style: none;
-  margin: 0 -10px;
-  clear: both;
-}
-.wd-visual-search /deep/ ul li{
-  width: 25%;
-  clear: both;
-  display: inline-block;
-  float: none!important;
-  margin: 0!important;
-  white-space: normal;
+    vertical-align: middle;
+    list-style: none;
+    margin: 0 -10px;
+    clear: both;
+  }
+  .wd-visual-search /deep/ ul li{
+    width: 25%;
+    clear: both;
+    display: inline-block;
+    float: none!important;
+    margin: 0!important;
+    white-space: normal;
+  }
 }
 
 </style>
