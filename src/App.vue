@@ -2,6 +2,9 @@
   <!-- <visual-search :product_id="2276"></visual-search> -->
   <!-- <communityHomePage></communityHomePage> -->
   <el-tabs type="card">
+    <el-tab-pane label="visualSearch">
+      <visualSearch></visualSearch>
+    </el-tab-pane>
     <el-tab-pane label="homePage">
       <homePage></homePage>
     </el-tab-pane>
@@ -10,9 +13,6 @@
     </el-tab-pane>
     <el-tab-pane label="communitySetting">
       <communitySetting></communitySetting>
-    </el-tab-pane>
-    <el-tab-pane label="visualSearch">
-      <visualSearch></visualSearch>
     </el-tab-pane>
   </el-tabs>
 </template>

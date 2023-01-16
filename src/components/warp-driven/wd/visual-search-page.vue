@@ -1,5 +1,5 @@
 <template>
-  <div :id="id" class="wd-visual-search" >
+  <div v-if="html!=null&&html!=''" :id="id" class="wd-visual-search" >
     <a class='wd-left-control' @click="contrLeftBtnClickHandler">&lt;</a>
       <div class='wd-visual-search-list' v-html="html"></div>
     <a class='wd-right-control' @click="contrRightBtnClickHandler">&gt;</a>
@@ -15,7 +15,7 @@ export default {
   props:{
     product_id:{
       type: Number,
-      default:0
+      default:10
     }, 
     products_class:{
       type: String,
@@ -24,6 +24,10 @@ export default {
     product_class:{
       type: String,
       default:'product'
+    },
+    products_box_class:{
+      type: String,
+      default:'wd-wc-visual-search'
     }
   },
   data(){
@@ -42,6 +46,13 @@ export default {
     getProductsHtmlByVs(){
       getProductsHtmlByVs({product_id:this.product_id}).then(res=>{
         this.html = res.html
+        this.$nextTick(()=>{
+          if($(`#${this.id}`).children(`.${this.product_class}`).length === 0){
+            $(`#${this.id}`).parent(`.${this.products_box_class}`).hide();
+          }else{
+            $(`#${this.id}`).parent(`.${this.products_box_class}`).show();
+          }
+        });
       })
     },
     contrBtnClickHandler($btn,type){
