@@ -39,6 +39,7 @@ export default {
   mounted(){
     this.getProductsHtmlByVs()
     this.$nextTick(()=>{
+      $(`#${this.id}`).parent(`.${this.products_box_class}`).hide();
       this.initEvent()
     });
   },  
@@ -47,7 +48,7 @@ export default {
       getProductsHtmlByVs({product_id:this.product_id}).then(res=>{
         this.html = res.html
         this.$nextTick(()=>{
-          if($(`#${this.id}`).children(`.${this.product_class}`).length === 0){
+          if($(`#${this.id}`).find(`.${this.product_class}`).length === 0){
             $(`#${this.id}`).parent(`.${this.products_box_class}`).hide();
           }else{
             $(`#${this.id}`).parent(`.${this.products_box_class}`).show();
