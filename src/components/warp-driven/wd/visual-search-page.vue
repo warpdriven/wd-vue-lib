@@ -40,7 +40,6 @@ export default {
     this.getProductsHtmlByVs()
     this.$nextTick(()=>{
       this.initEvent()
-      $(`#${this.id}`).parent(`.${this.products_box_class}`).hide();
     });
   },  
   methods:{
