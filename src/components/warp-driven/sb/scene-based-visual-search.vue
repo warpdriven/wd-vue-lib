@@ -81,7 +81,7 @@ export default {
   components:{sceneBasedDragProduct},
   data() {
     return {
-      dialogVisible: false,
+      dialogVisible: true,
       queryParams: {
         limit: 80,
         page: 1,
