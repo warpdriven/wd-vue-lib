@@ -2,6 +2,9 @@
   <!-- <visual-search :product_id="2276"></visual-search> -->
   <!-- <communityHomePage></communityHomePage> -->
   <el-tabs type="card">
+    <el-tab-pane label="sceneBaseVisualSearch">
+      <sceneBaseVisualSearch></sceneBaseVisualSearch>
+    </el-tab-pane>
     <el-tab-pane label="visualSearch">
       <visualSearch></visualSearch>
     </el-tab-pane>
@@ -14,6 +17,9 @@
     <el-tab-pane label="communitySetting">
       <communitySetting></communitySetting>
     </el-tab-pane>
+    <!-- <el-tab-pane label="sceneBaseVisualSearch">
+      <sceneBaseVisualSearch></sceneBaseVisualSearch>
+    </el-tab-pane> -->
   </el-tabs>
 </template>
 
@@ -23,6 +29,7 @@ import homePage from './components/warp-driven/wd/home-page.vue'
 import communityHomePage from './components/warp-driven/wd/community-home-page.vue'
 import visualSearch from './components/warp-driven/wd/visual-search-page.vue'
 import communitySetting from './components/warp-driven/wd/community-setting-page.vue';
+import sceneBaseVisualSearch from './components/warp-driven/sb/scene-based-visual-search.vue';
 
 export default {
   name: 'App',
@@ -30,7 +37,8 @@ export default {
     homePage,
     communityHomePage,
     communitySetting,
-    visualSearch
+    visualSearch,
+    sceneBaseVisualSearch
 }
 }
 </script>
