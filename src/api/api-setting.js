@@ -46,6 +46,12 @@ window.WD_API_SETTING={
         action:"wd_get_woo_product_list_html",
         method:"POST",
         contentType: "application/x-www-form-urlencoded"
+    },
+    WD_QUERY_PRODUCT_PAGE:{
+        ajax_url:"/api/wp-admin/admin-ajax.php",
+        action:"wd_query_product_page",
+        method:"POST",
+        contentType: "application/x-www-form-urlencoded"
     }
 }
 
