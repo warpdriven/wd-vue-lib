@@ -37,8 +37,8 @@
                   <el-input v-model="queryParams.sku" placeholder="sku" />
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="primary" @click="toQueryProducts">search</el-button>
-                  <el-button type="primary" @click="clearQueryProducts">clear</el-button>
+                  <el-button type="primary" @click.native="toQueryProducts">search</el-button>
+                  <el-button type="primary" @click.native="clearQueryProducts">clear</el-button>
                 </el-form-item>
               </el-form>
             </el-header>
@@ -50,7 +50,7 @@
                   :span="3"
                   style="padding:5px"
                 >
-                  <el-card class="product-image-card" @click="selectProductHandler(product)" :class="product.product_id==selectProduct.product_id?'is-selected':''">
+                  <el-card class="product-image-card" @click.native="selectProductHandler(product)" :class="product.product_id==selectProduct.product_id?'is-selected':''">
                     <span>{{ product.product_sku }}</span>
                     <div class="product-image" v-html="product.product_image_html"></div>
                     <span>{{ product.product_title }}</span>
@@ -64,8 +64,8 @@
       </el-container>
       <template #footer>
         <span class="dialog-footer">
-          <el-button @click="dialogVisible = false">Cancel</el-button>
-          <el-button type="primary" @click="confirmHandler">Confirm</el-button>
+          <el-button @click.native="dialogVisible = false">Cancel</el-button>
+          <el-button type="primary" @click.native="confirmHandler">Confirm</el-button>
         </span>
       </template>
     </el-dialog>
