@@ -56,8 +56,4 @@ export function getProductListHtml(data) {
   return getRequest('GET_PRODUCT_LIST_HTML',data)
 }
 
-export function wdQueryProductPage(data) {
-  return getRequest('WD_QUERY_PRODUCT_PAGE',data)
-}
-
-export default {initProducts, getVsCreditStatus ,getProductCategories, getProductsByCategory,getProductHandleHistory,getProductsHtmlByVs,getProductHtml,getProductListHtml,wdQueryProductPage}
+export default {initProducts, getVsCreditStatus ,getProductCategories, getProductsByCategory,getProductHandleHistory,getProductsHtmlByVs,getProductHtml,getProductListHtml}
