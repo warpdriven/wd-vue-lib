@@ -5,7 +5,6 @@
       <el-button type="primary">Save Scene Products</el-button>
       <el-divider></el-divider>
     </el-row>
-    <scene-based-drag-product ref="drag_product"></scene-based-drag-product>
     <el-dialog
       class="selecet-product-dialog"
       align-center
@@ -75,13 +74,11 @@
 <script>
 
 import { wdQueryProductPage,getProductCategories } from "../../../api/wd-common-api";
-import sceneBasedDragProduct from './scene-based-drag-product.vue';
 
 export default {
-  components:{sceneBasedDragProduct},
   data() {
     return {
-      dialogVisible: true,
+      dialogVisible: false,
       queryParams: {
         limit: 80,
         page: 1,
@@ -105,15 +102,8 @@ export default {
     };
   },
   mounted() {
-    this.$nextTick(() => {
-      this.queryCatetgoryTree()
-    });
   },
   methods: {
-    load() {
-      this.queryParams.page = this.queryParams.page + 1;
-      this.queryProducts();
-    },
     clearQueryProducts() {
       this.queryParams.sku = "";
       this.queryParams.name = "";
