@@ -21,7 +21,7 @@
           :stroke-width='20'
           :width='350'
           :color='colors'
-          :percentage='image_vector_plan ===0?0:towNumber((image_vector_left/image_vector_plan)*100)'
+          :percentage='product_plan_credit ===0?0:towNumber((product_credit/product_plan_credit)*100)'
           :format='InitializeFormat'
         ></el-progress>
       </el-col>
@@ -52,12 +52,8 @@ export default {
       init: true,
       task_progress:0,
       task_status:"RUNNING",
-      image_vector_left:0,
-      image_vector_plan:0,
-      webp_left:0,
-      webp_plan:0,
-      bk_rm_left:0,
-      bk_rm_plan:0,
+      product_credit:0,
+      product_plan_credit:0,
       authenticated:true,
       colors: [
         { color: '#f56c6c', percentage: 20 },
@@ -80,7 +76,7 @@ export default {
   },
   computed:{
     disabled(){
-      return (this.$refs['tree']&&this.$refs['tree'].getCheckedKeys().length === 0) || this.task_status === "RUNNING" || this.image_vector_left < 1
+      return (this.$refs['tree']&&this.$refs['tree'].getCheckedKeys().length === 0) || this.task_status === "RUNNING" || this.product_credit < 1
     }
   },
   mounted() {
@@ -92,17 +88,13 @@ export default {
       return val.toFixed(2)    
     },
     InitializeFormat(percentage) {
-      return `${percentage}%(${this.image_vector_left}/${this.image_vector_plan})\n Initialize visual search`
+      return `${percentage}%(${this.product_credit}/${this.product_plan_credit})\n Initialize visual search`
     },
-    loadTaskData(taskStaus){
-        this.task_progress = taskStaus.task_progress
-        this.image_vector_left = taskStaus.image_vector_left
-        this.image_vector_plan = taskStaus.image_vector_plan
-        this.webp_left = taskStaus.webp_left
-        this.webp_plan = taskStaus.webp_plan
-        this.bk_rm_left = taskStaus.bk_rm_left
-        this.bk_rm_plan = taskStaus.bk_rm_plan
-        this.task_status=taskStaus.task_status
+    loadTaskData(taskStatus){
+        this.task_progress = taskStatus.task_progress
+        this.product_credit = taskStatus.product_credit
+        this.product_plan_credit = taskStatus.product_plan_credit
+        this.task_status=taskStatus.task_status
     },
     getVsCreditStatus(){
       this.loading = true
@@ -114,7 +106,7 @@ export default {
             setTimeout(this.getVsCreditStatus,1000)
           }else{
             this.loading = false
-            if(res.data.task_status==="SUCCESS"){
+            if(res.data.task_status||res.data.task_status==="SUCCESS"){
               this.task_progress= 100
             }else{
               this.task_progress=0
@@ -165,29 +157,18 @@ export default {
       }
       const count=this.walkGetProductCountByCategroy(checkedNodes)
 
-      if(count>this.image_vector_left){
+      if(count>this.product_credit){
         this.$message.error({
-          message: `Select up to image vector left number ${this.image_vector_left} messages`
+          message: `Select up to image vector left number ${this.product_credit} messages`
         })
         return
       }
-
-      if(count > 100){
-        this.$message.error({
-          message: "Select up to 100 messages"
-        })
-        return
-      }
+      
       this.loading = true
       getProductsByCategory({category:checkedKeys.join(","),per_page:100}).then(res=>{
-        initProducts({products:res}).then(result=>{
-          if(result.status){
-            this.getVsCreditStatus()
-          }else{
-            this.loading = false
-          }
-        })
+        this.loading = false
       })
+      setTimeout(this.getVsCreditStatus,1000)
     }  
   }
 }
