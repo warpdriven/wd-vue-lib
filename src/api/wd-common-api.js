@@ -56,4 +56,21 @@ export function getProductListHtml(data) {
   return getRequest('GET_PRODUCT_LIST_HTML',data)
 }
 
-export default {initProducts, getVsCreditStatus ,getProductCategories, getProductsByCategory,getProductHandleHistory,getProductsHtmlByVs,getProductHtml,getProductListHtml}
+export function getUserExsited(data){
+  return getRequest('GET_USER_EXSITED',data)
+} 
+
+export function createUser(data){
+  return getRequest('CREATE_USER',data)
+}
+
+export function getMyWebside(data){
+  return getRequest('GET_MY_WEBSIDE',data)
+}
+
+export function createMyWebsite(data){
+  return getRequest('CREATE_MY_WEBSITE',data)
+}
+
+
+export default {initProducts, getVsCreditStatus ,getProductCategories, getProductsByCategory,getProductHandleHistory,getProductsHtmlByVs,getProductHtml,getProductListHtml,createUser,getMyWebside,createMyWebsite}

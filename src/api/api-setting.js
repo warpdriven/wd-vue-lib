@@ -26,8 +26,8 @@ window.WD_API_SETTING={
         contentType: "application/x-www-form-urlencoded"
     },
     GET_PRODUCTS_BY_CATEGORY:{
-        ajax_url:'/api/wp-json/wd/v3/products',
-        method:"GET"
+        ajax_url:"/api/wp-admin/admin-ajax.php",
+        action:"wd_get_woo_products_by_category"
     },
     GET_PRODUCT_HTML:{
         ajax_url:"/api/wp-admin/admin-ajax.php",
@@ -46,6 +46,20 @@ window.WD_API_SETTING={
         action:"wd_get_woo_product_list_html",
         method:"POST",
         contentType: "application/x-www-form-urlencoded"
+    },
+    GET_USER_EXSITED: {
+        ajax_url: "/api/wp-admin/admin-ajax.php?action=wd_get_user_exsited",
+        method: "GET"
+    },
+    CREATE_USER: {
+        ajax_url: "/api/wp-admin/admin-ajax.php?action=wd_create_erp_user",
+        method: "POST",
+        contentType: "application/json"
+    },
+    CREATE_MY_WEBSITE: {
+        ajax_url: "/api/wp-admin/admin-ajax.php?action=wd_create_my_website",
+        method: "POST",
+        contentType: "application/json"
     }
 }
 

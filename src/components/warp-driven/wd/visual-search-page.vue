@@ -40,7 +40,6 @@ export default {
     this.getProductsHtmlByVs()
     this.$nextTick(()=>{
       $(`#${this.id}`).parent(`.${this.products_box_class}`).hide();
-      this.initEvent()
     });
   },  
   methods:{
@@ -59,35 +58,35 @@ export default {
     contrBtnClickHandler($btn,type){
       let products_class = this.products_class
       let product_class = this.product_class
-      $btn.click(function(){
-          let $wrap = $(this).parent(".wd-visual-search");
-          let index = $wrap.data("index")||0;
-          let $ul = $wrap.find("."+products_class);
-          let $lis = $ul.find("."+product_class);
-          let liWidth = $lis.eq(index).outerWidth(true);
-          if($lis.length>0){
-              let liSize = $lis.length;
-              let ulWidth = liWidth * liSize;
-              let left = Number.parseInt($ul.css("left"));
-              let wrapWidth = $wrap.width();
-              if( "+" == type){
-                  index = index-1
-              }else{
-                  index = index+1;
-              }
-              $wrap.data("index",index);            
-              if((left < 0 && "+" == type)||(left > -(ulWidth - wrapWidth) && "-" == type)){
-                  $btn.attr("disabled",true);
-                  $ul.animate({"left":type+"="+liWidth+"px"},function(){
-                      $btn.attr("disabled",false);
-              });
-              }
+      let $wrap = $btn.parent(".wd-visual-search");
+      let index = $wrap.data("index")||0;
+      let $ul = $wrap.find("."+products_class);
+      let $lis = $ul.find("."+product_class);
+      let liWidth = $lis.eq(index).outerWidth(true);
+      if($lis.length>0){
+          let liSize = $lis.length;
+          let ulWidth = liWidth * liSize;
+          let left = Number.parseInt($ul.css("left"));
+          let wrapWidth = $wrap.width();
+          if( "+" == type){
+              index = index-1
+          }else{
+              index = index+1;
           }
-      });
+          $wrap.data("index",index);            
+          if((left < 0 && "+" == type)||(left > -(ulWidth - wrapWidth) && "-" == type)){
+              $btn.attr("disabled",true);
+              $ul.animate({"left":type+"="+liWidth+"px"},function(){
+                  $btn.attr("disabled",false);
+          });
+          }
+      }
     },
-    initEvent(){
-        this.contrBtnClickHandler($(`#${this.id}`).find(".wd-left-control"),"+");
-        this.contrBtnClickHandler($(`#${this.id}`).find(".wd-right-control"),"-");
+    contrLeftBtnClickHandler(){
+      this.contrBtnClickHandler($(`#${this.id}`).find(".wd-left-control"),"+");
+    },
+    contrRightBtnClickHandler(){
+      this.contrBtnClickHandler($(`#${this.id}`).find(".wd-right-control"),"-");
     }
   }
 }
