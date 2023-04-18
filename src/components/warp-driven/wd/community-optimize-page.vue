@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import {initProducts, getVsCreditStatus ,getProductCategories ,getProductsByCategory} from '../../../api/wd-common-api'
+import {getVsCreditStatus ,getProductCategories ,getProductsByCategory} from '../../../api/wd-common-api'
 export default {
   data() {
     return {

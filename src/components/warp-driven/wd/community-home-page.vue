@@ -5,37 +5,38 @@
     </el-container>
     <el-row>
       <el-col :sm="12" :lg="8">
-        <el-result :icon="authenticated?'success':'warning'" title="Create an account" subTitle="Don’t have a Warp Driven account yet? Boost your business by creating an account with a few clicks!">
-          <template #icon>
-            <User></User>
-          </template>
-          <template #extra>
-            <el-link href="https://warp-driven.com/my-account/" target="_blank"><el-button type="primary" size="mini">SIGN UP,IT'S FREE!</el-button></el-link>
-          </template>
-        </el-result>
-      </el-col>
-      <el-col :sm="12" :lg="8">
-        <el-result icon="info"  title="Configure your website"  subTitle="Input your website info and get an API Key.">
+        <el-result title="Set Password" subTitle="If you need to visit our website for multi-platform support, please first set a password through the button below">
           <template #icon>
             <Key></Key>
           </template>
           <template #extra>
-            <el-link href="https://erp.warp-driven.com/website_info" target="_blank"><el-button type="primary" size="mini">GO TO SETTING</el-button></el-link>
+            <el-link href="https://warp-driven.com/my-account/" target="_blank"><el-button type="primary" size="mini">Set Password</el-button></el-link>
           </template>
         </el-result>
       </el-col>
       <el-col :sm="12" :lg="8">
-        <el-result :icon="authenticated&&!is_expired?'success':'warning'" :title="authenticated?(is_expired?'API Key Has Expired':'API Key Availabled'):'Enter your API Key'" :subTitle="`${(plan_start_date?plan_start_date+'~':'')+(plan_end_date?plan_end_date:'Copy & Save your API key here on your website info page')}`">
+        <el-result  title="Check your account"  subTitle="Check your Warp Driven account and find more products. Boost your business now!">
+          <template #icon>
+            <User></User>
+          </template>
+          <template #extra>
+            <el-link href="https://erp.warp-driven.com/website_info" target="_blank"><el-button type="primary" size="mini">Check Account</el-button></el-link>
+          </template>
+        </el-result>
+      </el-col>
+      <el-col :sm="12" :lg="8">
+        <el-result :title="'Configure your shop setting'" subTitle="Change your shop info, API Key or add more shops under your same plan.">
           <template #icon>
             <Setting></Setting>
           </template>
           <template #extra>
-            <el-link :href="settingUrl"><el-button type="primary" size="mini">{{authenticated?(is_expired?'REPLACE MY API KEY':'SHOW MY API KEY'):'I COPIED MY API KEY'}}</el-button></el-link>
+            <el-link href="https://erp.warp-driven.com/website_info" target="_blank"><el-button type="primary" size="mini">Shop Setting</el-button></el-link>
           </template>
         </el-result>
       </el-col>
     </el-row>
     <optimize-page v-show="authenticated&&!is_expired" @task-status="loadTaskStatus"></optimize-page>
+    <warp-driven-vs-register :erpUserEmail="erpUserEmail"></warp-driven-vs-register>
   </div>
 </template>
 
@@ -43,36 +44,23 @@
 
 import optimizePage from './community-optimize-page.vue';
 import { User,Key,Setting } from '@element-plus/icons-vue';
+import WarpDrivenVsRegister from './warp-driven-vs-register.vue';
 
 export default {
   props:{
+    erpUserEmail: {
+      type: String,
+      default: "",
+    },
     settingUrl:{
       type: String,
       default:'#'
     }
   },
   data(){
-    return {
-      authenticated:false,
-      is_expired:true,
-      plan_end_date:null,
-      plan_start_date:null
-    }
   },
-  components:{optimizePage,User,Key,Setting},
+  components:{optimizePage,User,Key,Setting,WarpDrivenVsRegister},
   methods:{
-    loadTaskStatus(result){
-      if(result.code === 403){
-        this.authenticated = false
-      }else{
-        this.authenticated = true
-        if(result.status){
-          this.is_expired = false
-          this.plan_start_date = result.data.plan_start_date
-          this.plan_end_date = result.data.plan_end_date
-        }
-      }
-    }
   }
 }
 </script>

@@ -1,24 +1,36 @@
 <template>
   <div class="home-page">
+    <el-container>
+      <el-aside><i class="logo-img"></i>Warp Driven</el-aside><el-main>Welcome to Warp Driven Technology, we contribute your eCommerce business with cutting-edge information technologies !</el-main>
+    </el-container>
     <el-row>
       <el-col :sm="12" :lg="8">
-        <el-result :icon="authenticated?'success':'warning'" title="Create an account" subTitle="Create an account">
+        <el-result title="Set Password" subTitle="If you need to visit our website for multi-platform support, please first set a password through the button below">
+          <template #icon>
+            <Key></Key>
+          </template>
           <template #extra>
-            <el-link href="https://www.warp-driven.com" target="_blank"><el-button type="primary" size="mini">SIGN UP,IT'S FREE!</el-button></el-link>
+            <el-link href="https://warp-driven.com/my-account/" target="_blank"><el-button type="primary" size="mini">Set Password</el-button></el-link>
           </template>
         </el-result>
       </el-col>
       <el-col :sm="12" :lg="8">
-        <el-result :icon="authenticated&&!is_expired?'success':'warning'" :title="authenticated?(is_expired?'API Key Has Expired':'API Key Availabled'):'Enter your API Key'" :subTitle="`${(plan_start_date?plan_start_date+'~':'')+(plan_end_date?plan_end_date:'')}`">
+        <el-result  title="Check your account"  subTitle="Check your Warp Driven account and find more products. Boost your business now!">
+          <template #icon>
+            <User></User>
+          </template>
           <template #extra>
-            <el-link :href="settingUrl"><el-button type="primary" size="mini">{{authenticated?(is_expired?'REPLACE MY API KEY':'SHOW MY API KEY'):'I HAVE MY API KEY'}}</el-button></el-link>
+            <el-link href="https://erp.warp-driven.com/website_info" target="_blank"><el-button type="primary" size="mini">Check Account</el-button></el-link>
           </template>
         </el-result>
       </el-col>
       <el-col :sm="12" :lg="8">
-        <el-result icon="info"  title="Contact Us"  subTitle="Contact Us">
+        <el-result :title="'Configure your shop setting'" subTitle="Change your shop info, API Key or add more shops under your same plan.">
+          <template #icon>
+            <Setting></Setting>
+          </template>
           <template #extra>
-            <el-link href="https://www.warp-driven.com" target="_blank"><el-button type="primary" size="mini">GO TO OFFICIAL WEBSITE</el-button></el-link>
+            <el-link href="https://erp.warp-driven.com/website_info" target="_blank"><el-button type="primary" size="mini">Shop Setting</el-button></el-link>
           </template>
         </el-result>
       </el-col>
@@ -58,15 +70,21 @@
         </el-col>
       </el-row>
     </div>
+    <warp-driven-vs-register :erpUserEmail="erpUserEmail"></warp-driven-vs-register>
   </div>
 </template>
 
 <script>
 
 import optimizePage from './optimize-page.vue';
+import WarpDrivenVsRegister from './warp-driven-vs-register.vue';
 
 export default {
   props:{
+    erpUserEmail: {
+      type: String,
+      default: "",
+    },
     settingUrl:{
       type: String,
       default:'#'
@@ -80,7 +98,7 @@ export default {
       plan_start_date:null
     }
   },
-  components:{optimizePage},
+  components:{ optimizePage, WarpDrivenVsRegister },
   methods:{
     loadTaskStatus(result){
       if(result.code === 403){
