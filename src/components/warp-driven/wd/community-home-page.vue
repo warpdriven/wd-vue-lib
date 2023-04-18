@@ -35,7 +35,7 @@
         </el-result>
       </el-col>
     </el-row>
-    <optimize-page v-show="authenticated&&!is_expired" @task-status="loadTaskStatus"></optimize-page>
+    <optimize-page></optimize-page>
     <warp-driven-vs-register :erpUserEmail="erpUserEmail"></warp-driven-vs-register>
   </div>
 </template>
