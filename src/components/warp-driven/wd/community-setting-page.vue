@@ -23,11 +23,11 @@
     <el-form :action="action" :method="method" :model="form" class="setting-form">
       <slot name="header"></slot>
       <el-collapse v-model="activeNames">
-        <el-collapse-item title="API Key Setting" name="1">
+        <!-- <el-collapse-item title="API Key Setting" name="1">
           <el-form-item label="API Key">
             <el-input v-model="form.wd_api_key" name="wd_api_key"></el-input>
           </el-form-item>
-        </el-collapse-item>  
+        </el-collapse-item>   -->
         <el-collapse-item title="Product Detail Page Widget Setting" name="2">
           <el-form-item label="Product Detail Page Widget Enable">
             <el-switch
