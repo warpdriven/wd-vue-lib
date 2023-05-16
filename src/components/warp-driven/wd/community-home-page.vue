@@ -1,7 +1,7 @@
 <template>
   <div class="home-page">
     <el-container>
-      <el-aside><i class="logo-img"></i>Warp Driven</el-aside><el-main>Welcome to Warp Driven Technology, we contribute your eCommerce business with cutting-edge information technologies !</el-main>
+      <el-aside><i class="logo-img"></i>WarpDriven Visually Similar Recommendations</el-aside><el-main>Welcome to Warp Driven Technology, we contribute your eCommerce business with cutting-edge information technologies !</el-main>
     </el-container>
     <el-row>
       <el-col :sm="12" :lg="8">
