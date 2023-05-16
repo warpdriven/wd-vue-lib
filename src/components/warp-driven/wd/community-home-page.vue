@@ -81,11 +81,11 @@ export default {
 .home-page .el-container .el-aside{
   background-color:#2c3e50;
   color: #ffffff;
-  line-height: 62px;
+  line-height: 80px;
   font-size: 24px;
   font-weight: bold;
   text-align: left;
-  width: 220px;
+  width: 600px;
 }
 
 .home-page .el-container .el-main{
@@ -107,7 +107,6 @@ export default {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 40px auto;
-  background-image: url(../../../assets/visual_search_icon-128-128.png)
-
+}
 
 </style>
