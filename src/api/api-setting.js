@@ -63,7 +63,7 @@ window.WD_API_SETTING = {
   },
   CANCEL_INIT: {
     ajax_url: "/api/wp-admin/admin-ajax.php",
-    action: "init_product_cancel",
+    action: "wd_init_product_cancel",
   },
 };
 
