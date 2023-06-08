@@ -13,7 +13,39 @@
           ref="tree"
           highlight-current
           :props="defaultProps"
-        ></el-tree>
+        >
+          <template #default="{ node, data }">
+            <div class="tree__row">
+              <div>
+                <span> {{ data.name }} </span>
+                <span>({{ data.count }})</span>
+              </div>
+              <div class="row__right">
+                <el-text type="success"
+                  >success: {{ data.count_success }}
+                </el-text>
+                <el-text type="primary"
+                  >pending: {{ data.count_pending }}
+                </el-text>
+                <el-popover width="auto" placement="top" trigger="hover">
+                  <template #reference>
+                    <el-text type="danger"
+                      >fail: {{ data.count_error }}
+                    </el-text>
+                  </template>
+                  <ul>
+                    <li>
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    </li>
+                    <li>1</li>
+                    <li>1</li>
+                    <li>1</li>
+                  </ul>
+                </el-popover>
+              </div>
+            </div>
+          </template>
+        </el-tree>
       </el-col>
       <el-col :span="14">
         <div>
@@ -264,5 +296,16 @@ export default {
 }
 .right__btn {
   width: 15rem;
+}
+.tree__row {
+  flex: 1;
+  overflow: hidden;
+
+  display: flex;
+  justify-content: space-between;
+}
+.row__right {
+  display: flex;
+  gap: 0.5rem;
 }
 </style>
