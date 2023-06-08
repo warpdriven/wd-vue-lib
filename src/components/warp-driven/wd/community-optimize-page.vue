@@ -75,6 +75,7 @@
           >
           <el-button
             @click="handleCancel"
+            :loading="isCancelLoading"
             :disabled="disabled"
             type="danger"
             link
@@ -103,6 +104,7 @@ import {
   getVsCreditStatus,
   getProductCategories,
   getProductsByCategory,
+  cancelInit,
 } from "../../../api/wd-common-api";
 export default {
   data() {
@@ -133,6 +135,8 @@ export default {
           return data.count === 0;
         },
       },
+      // Cancel loading
+      isCancelLoading: false,
     };
   },
   computed: {
@@ -242,7 +246,7 @@ export default {
       setTimeout(this.getVsCreditStatus, 1000);
     },
     // Cancel btn click handle
-    handleCancel() {
+    async handleCancel() {
       const checkedKeys = this.$refs["tree"].getCheckedKeys();
       const checkedNodes = this.$refs["tree"].getCheckedNodes();
       if (checkedKeys.length === 0) {
@@ -256,7 +260,17 @@ export default {
         });
         return;
       }
-      console.log(checkedKeys.join(","));
+      this.isCancelLoading = true;
+      try {
+        await cancelInit({
+          category: checkedKeys.join(","),
+          per_page: 100,
+        });
+        setTimeout(() => this.getVsCreditStatus(), 1000);
+        console.log(checkedKeys.join(","));
+      } finally {
+        this.isCancelLoading = false;
+      }
     },
   },
 };
