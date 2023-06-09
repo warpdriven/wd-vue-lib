@@ -65,6 +65,10 @@ window.WD_API_SETTING = {
     ajax_url: "/api/wp-admin/admin-ajax.php",
     action: "wd_init_product_cancel",
   },
+  GET_ERP_WEBSITE: {
+    ajax_url: "/api/wp-admin/admin-ajax.php",
+    action: "wd_get_erp_website",
+  },
 };
 
 export function config(config) {

@@ -3,7 +3,10 @@
     <el-tag>optimize page</el-tag>
     <el-divider content-position="left">Select Product Cate</el-divider>
     <el-row style="height: 700px">
-      <el-col :span="8" style="height: 100%; overflow: auto">
+      <el-col
+        :span="8"
+        style="height: 100%; overflow: auto"
+      >
         <el-tree
           :data="data"
           show-checkbox
@@ -30,7 +33,7 @@
             <el-progress
               :type="'circle'"
               :stroke-width="20"
-              :width="'300'"
+              :width="300"
               :color="colors"
               :percentage="webpercentage"
               :format="ConvertFormat"
@@ -141,7 +144,7 @@ export default {
         : (this.image_vector_left / this.image_vector_plan) * 100;
     },
     rmpercentage() {
-      console.info(this.image_vector_left);
+      // console.info(this.image_vector_left);
       return this.bk_rm_plan === 0
         ? 0
         : (this.bk_rm_left / this.bk_rm_plan) * 100;
@@ -153,7 +156,7 @@ export default {
   mounted() {
     this.getVsCreditStatus();
     this.queryCatetgoryTree();
-    console.log(this);
+    // console.log(this);
   },
   methods: {
     InitializeFormat(percentage) {

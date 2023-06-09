@@ -84,6 +84,10 @@ export function cancelInit(data) {
   return getRequest("CANCEL_INIT", data);
 }
 
+export function getErpWebsite(data) {
+  return getRequest("GET_ERP_WEBSITE", data);
+}
+
 export default {
   initProducts,
   getVsCreditStatus,
@@ -96,4 +100,6 @@ export default {
   createUser,
   getMyWebside,
   createMyWebsite,
+  cancelInit,
+  getErpWebsite,
 };

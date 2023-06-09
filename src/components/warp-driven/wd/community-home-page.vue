@@ -1,3 +1,6 @@
+<script setup>
+import linkBoard from "./link-board.vue";
+</script>
 <template>
   <div class="home-page">
     <el-container>
@@ -9,57 +12,7 @@
         business with cutting-edge information technologies !</el-main
       >
     </el-container>
-    <el-row>
-      <el-col :sm="12" :lg="8">
-        <el-result
-          title="Set Password"
-          subTitle="If you need to visit our website for multi-platform support, please first set a password through the button below"
-        >
-          <template #icon>
-            <Key></Key>
-          </template>
-          <template #extra>
-            <el-link href="https://warp-driven.com/my-account/" target="_blank"
-              ><el-button type="primary">Set Password</el-button></el-link
-            >
-          </template>
-        </el-result>
-      </el-col>
-      <el-col :sm="12" :lg="8">
-        <el-result
-          title="Check your account"
-          subTitle="Check your Warp Driven account and find more products. Boost your business now!"
-        >
-          <template #icon>
-            <User></User>
-          </template>
-          <template #extra>
-            <el-link
-              href="https://erp.warp-driven.com/website_info"
-              target="_blank"
-              ><el-button type="primary">Check Account</el-button></el-link
-            >
-          </template>
-        </el-result>
-      </el-col>
-      <el-col :sm="12" :lg="8">
-        <el-result
-          :title="'Configure your shop setting'"
-          subTitle="Change your shop info, API Key or add more shops under your same plan."
-        >
-          <template #icon>
-            <Setting></Setting>
-          </template>
-          <template #extra>
-            <el-link
-              href="https://erp.warp-driven.com/website_info"
-              target="_blank"
-              ><el-button type="primary">Shop Setting</el-button></el-link
-            >
-          </template>
-        </el-result>
-      </el-col>
-    </el-row>
+    <link-board></link-board>
     <optimize-page></optimize-page>
     <warp-driven-vs-register
       :erpUserEmail="erpUserEmail"
@@ -69,10 +22,10 @@
 
 <script>
 import optimizePage from "./community-optimize-page.vue";
-import { User, Key, Setting } from "@element-plus/icons-vue";
 import WarpDrivenVsRegister from "./warp-driven-vs-register.vue";
 
 export default {
+  components: { optimizePage, WarpDrivenVsRegister },
   props: {
     erpUserEmail: {
       type: String,
@@ -83,9 +36,9 @@ export default {
       default: "#",
     },
   },
-  data() {},
-  components: { optimizePage, User, Key, Setting, WarpDrivenVsRegister },
-  methods: {},
+  data() {
+    return {};
+  },
 };
 </script>
 
