@@ -1,10 +1,12 @@
 <template>
   <div class="optimize-page">
-    <!-- <el-tag>optimize page</el-tag> -->
     <el-divider content-position="left">Select Product Cate</el-divider>
     <el-row>
       <el-col :span="2">&nbsp;</el-col>
-      <el-col :span="8" style="height: 400px; overflow: auto">
+      <el-col
+        :span="8"
+        style="height: 400px; overflow: auto"
+      >
         <el-tree
           :data="data"
           show-checkbox
@@ -27,20 +29,31 @@
                 <el-text type="primary"
                   >pending: {{ data.count_pending }}
                 </el-text>
-                <el-popover width="auto" placement="top" trigger="hover">
+                <el-text
+                  v-if="!data.count_error"
+                  type="danger"
+                  >fail: {{ data.count_error }}
+                </el-text>
+                <el-popover
+                  v-else
+                  width="auto"
+                  placement="top"
+                  trigger="hover"
+                >
                   <template #reference>
                     <el-text type="danger"
                       >fail: {{ data.count_error }}
                     </el-text>
                   </template>
-                  <ul>
-                    <li>
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                  <ol>
+                    <li
+                      v-for="(item, index) in data?.error_info || []"
+                      :key="index"
+                    >
+                      <span>{{ item.err_name }}：</span>
+                      <span>{{ item.err_msg }}</span>
                     </li>
-                    <li>1</li>
-                    <li>1</li>
-                    <li>1</li>
-                  </ul>
+                  </ol>
                 </el-popover>
               </div>
             </div>
