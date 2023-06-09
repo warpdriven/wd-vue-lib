@@ -262,12 +262,12 @@ export default {
       }
       this.isCancelLoading = true;
       try {
-        const message = await cancelInit({
+        const data = await cancelInit({
           category: checkedKeys.join(","),
           per_page: 100,
         });
-        if (typeof message === "string") {
-          this.$message.success({ message });
+        if (typeof data?.msg === "string") {
+          this.$message.success({ message: data.msg });
         }
         setTimeout(() => this.getVsCreditStatus(), 1000);
       } catch {
