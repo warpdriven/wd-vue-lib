@@ -8,6 +8,7 @@
         style="height: 400px; overflow: auto"
       >
         <el-tree
+          v-loading="isTreeLoading"
           :data="data"
           show-checkbox
           default-expand-all
@@ -150,6 +151,7 @@ export default {
       },
       // Cancel loading
       isCancelLoading: false,
+      isTreeLoading: false,
     };
   },
   computed: {
@@ -201,9 +203,14 @@ export default {
       });
     },
     queryCatetgoryTree() {
-      getProductCategories({}).then((res) => {
-        this.data = this.getTreeNodes(res);
-      });
+      this.isTreeLoading = true;
+      getProductCategories({})
+        .then((res) => {
+          this.data = this.getTreeNodes(res);
+        })
+        .finally(() => {
+          this.isTreeLoading = false;
+        });
     },
     getTreeNodes(nodes) {
       let rootNodes = [];
@@ -255,6 +262,7 @@ export default {
         per_page: 100,
       }).then((res) => {
         this.loading = false;
+        this.queryCatetgoryTree();
       });
       setTimeout(this.getVsCreditStatus, 1000);
     },
@@ -283,6 +291,7 @@ export default {
           this.$message.success({ message: data.msg });
         }
         setTimeout(() => this.getVsCreditStatus(), 1000);
+        this.queryCatetgoryTree();
       } catch {
         this.$message.error({ message: `System error` });
       } finally {
