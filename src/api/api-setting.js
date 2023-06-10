@@ -66,8 +66,9 @@ window.WD_API_SETTING = {
     action: "wd_init_product_cancel",
   },
   GET_ERP_WEBSITE: {
-    ajax_url: "/api/wp-admin/admin-ajax.php",
-    action: "wd_get_erp_website",
+    ajax_url: "/api/wp-admin/admin-ajax.php?action=wd_get_erp_website",
+    // action: "wd_get_erp_website",
+    method: "GET",
   },
 };
 
