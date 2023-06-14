@@ -4,17 +4,24 @@ import { getErpWebsite } from "../../../api/wd-common-api";
 import { ElMessage } from "element-plus";
 import { User, Key, Setting } from "@element-plus/icons-vue";
 
-const state = reactive({ erpUrl: "" });
+const state = reactive({ erpUrl: "", email: "" });
 
-const linkSetPwd = computed(() => `${state.erpUrl}/my-account/`);
-const linkChkAccont = computed(() => `${state.erpUrl}/website_info/`);
-const linkShopSeting = computed(() => `${state.erpUrl}/website_info`);
+const linkSetPwd = computed(
+  () => `${state.erpUrl}/web/reset_password?login=${state.email}`
+);
+const linkChkAccont = computed(
+  () => `${state.erpUrl}/subscription/ai_writer?login=${state.email}`
+);
+const linkShopSeting = computed(
+  () => `${state.erpUrl}/my/website_info?login=${state.email}`
+);
 
 watchPostEffect(async () => {
   try {
     const data = await getErpWebsite();
-    const { url } = data;
+    const { url, email } = data;
     state.erpUrl = url;
+    state.email = email;
   } catch {
     ElMessage.error("System error");
   }
