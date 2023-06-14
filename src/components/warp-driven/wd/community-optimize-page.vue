@@ -250,8 +250,11 @@ export default {
       const count = this.walkGetProductCountByCategroy(checkedNodes);
 
       if (count > this.product_credit) {
+        const message =
+          "Credit not enough, please click “Check Account” button to buy more credits or subscript a new plan.";
         this.$message.error({
-          message: `Select up to image vector left number ${this.product_credit} messages`,
+          // message: `Select up to image vector left number ${this.product_credit} messages`,
+          message,
         });
         return;
       }
