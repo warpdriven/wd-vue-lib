@@ -190,11 +190,12 @@ export default {
         if (res.status) {
           this.loadTaskData(res.data);
           if (res.data.task_status === "RUNNING") {
-            setTimeout(this.getVsCreditStatus, 1000);
+            setTimeout(() => this.getVsCreditStatus(), 1000);
           } else {
             this.loading = false;
             if (res.data.task_status || res.data.task_status === "SUCCESS") {
               this.task_progress = 100;
+              this.queryCatetgoryTree();
             } else {
               this.task_progress = 0;
             }
@@ -250,8 +251,11 @@ export default {
       const count = this.walkGetProductCountByCategroy(checkedNodes);
 
       if (count > this.product_credit) {
+        const message =
+          "Credit not enough, please click “Check Account” button to buy more credits or subscript a new plan.";
         this.$message.error({
-          message: `Select up to image vector left number ${this.product_credit} messages`,
+          // message: `Select up to image vector left number ${this.product_credit} messages`,
+          message,
         });
         return;
       }
@@ -264,23 +268,13 @@ export default {
         this.loading = false;
         this.queryCatetgoryTree();
       });
-      setTimeout(this.getVsCreditStatus, 1000);
+      setTimeout(() => this.getVsCreditStatus(), 1000);
     },
     // Cancel btn click handle
     async handleCancel() {
       const checkedKeys = this.$refs["tree"].getCheckedKeys();
-      const checkedNodes = this.$refs["tree"].getCheckedNodes();
-      if (checkedKeys.length === 0) {
-        return;
-      }
-      const count = this.walkGetProductCountByCategroy(checkedNodes);
+      if (checkedKeys.length === 0) return;
 
-      if (count > this.product_credit) {
-        this.$message.error({
-          message: `Select up to image vector left number ${this.product_credit} messages`,
-        });
-        return;
-      }
       this.isCancelLoading = true;
       try {
         const data = await cancelInit({
